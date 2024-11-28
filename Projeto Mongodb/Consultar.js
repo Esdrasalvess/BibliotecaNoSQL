@@ -1,7 +1,7 @@
-async function cadastrarLivros() {
+async function consultarLivros() {
     
-    const titulo = document.getElementById('cadastrar/titulo').value;
-    const selectAutor = document.getElementById('cadastrar/select_autores').value;
+    const titulo = document.getElementById('consulta/titulo').value;
+    const selectAutor = document.getElementById('consulta/select_autores').value;
     
     const dado = {
         titulo: titulo,
@@ -10,7 +10,7 @@ async function cadastrarLivros() {
 
     try {
 
-        const response = await fetch('/cadastrar/cadastrarLivros', {
+        const response = await fetch('/consulta/cadastrarLivros', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'  
@@ -29,10 +29,10 @@ async function cadastrarLivros() {
     }
 }
 
-async function cadastrarAutores() {
-    const nome = document.getElementById('cadastrar/nome').value;
-    const idade = document.getElementById('cadastrar/idade').value;
-    const nacionalidade = document.getElementById('cadastrar/nacionalidade').value;
+async function consultarAutores() {
+    const nome = document.getElementById('consulta/nome').value;
+    const idade = document.getElementById('consulta/idade').value;
+    const nacionalidade = document.getElementById('consulta/nacionalidade').value;
     
     const dado = {
         nome: nome,
@@ -41,7 +41,7 @@ async function cadastrarAutores() {
     };
 
     try {
-        const response = await fetch('/cadastrar/cadastrarAutores', {
+        const response = await fetch('/consulta/cadastrarAutores', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'  
@@ -49,20 +49,15 @@ async function cadastrarAutores() {
             body: JSON.stringify(dado)  
         });
 
-        if (response.ok) {
-            alert('Cadastro realizado com sucesso!');
-        } else {
-            alert('Erro ao cadastrar livro.');
-        }
     } catch (error) {
-       console.log('Erro ao cadastrar:', error);
-        alert('Erro ao cadastrar. Verifique o console.');
+       console.log('Erro ao consultar:', error);
+        alert('Erro ao consultar. Verifique o console.');
     }
 }
 
 async function carregarAutores() {
     try {
-        const response = await fetch('/cadastrar/selectAutores');  
+        const response = await fetch('/consulta/selectAutores');  
 
         if (!response.ok) {
             throw new Error('Falha ao carregar autores, status: ' + response.status);
@@ -72,7 +67,7 @@ async function carregarAutores() {
 
 
 
-        const selectAutor = document.getElementById('cadastrar/select_autores');
+        const selectAutor = document.getElementById('consulta/select_autores');
 
         if (!selectAutor) {
             throw new Error('Elemento de seleção não encontrado');
@@ -103,10 +98,10 @@ async function carregarAutores() {
 
 window.onload = carregarAutores;
 
-const botaocadastrarLivros = document.getElementById("cadastrar/cadastrarLivro");
-botaocadastrarLivros.addEventListener("click", cadastrarLivros);
+const botaoconsultarLivros = document.getElementById("cadastro/consultarLivro");
+botaoconsultarLivros.addEventListener("click", consultarLivros);
 
-const botaocadastrarAutores = document.getElementById("cadastrar/cadastrarAutor");
-botaocadastrarAutores.addEventListener("click", cadastrarAutores);
+const botaoconsultarAutores = document.getElementById("cadastro/consultarAutor");
+botaoconsultarAutores.addEventListener("click", consultarAutores);
 
 document.addEventListener('DOMContentLoaded', carregarAutores);

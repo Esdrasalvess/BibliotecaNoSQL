@@ -9,41 +9,81 @@
 <body>
 
     <form id="formCadastrarAutor">
-        <input type="text" id="cadastro/nome" placeholder="Nome do Autor">
-        <input type="text" id="cadastro/idade" placeholder="Idade">
-        <input type="text" id="cadastro/nacionalidade" placeholder="Nacionalidade">
-        <button id="cadastro/cadastrarAutor">Cadastrar</button>
+        <input type="text" id="cadastrar/nome" placeholder="Nome do Autor">
+        <input type="text" id="cadastrar/idade" placeholder="Idade">
+        <input type="text" id="cadastrar/nacionalidade" placeholder="Nacionalidade">
+        <button id="cadastrar/cadastrarAutor">Cadastrar</button>
     </form>
 
 
     <form id="formCadastrarLivro">
-        <input type="text" id="cadastro/titulo" placeholder="Título do Livro">
-        <select id="cadastro/select_autores">
+        <input type="text" id="cadastrar/titulo" placeholder="Título do Livro">
+        <select id="cadastrar/select_autores">
             <option value= "" selected disabled>Selecione o autor</option>
         </select>
-        <button id="cadastro/cadastrarLivro">Cadastrar</button>
+        <button id="cadastrar/cadastrarLivro">Cadastrar</button>
+    </form>
+
+    <br>
+
+    <form id="formConsultarAutor">
+        <input type="text" id="consultar/nome" placeholder="Nome do Autor">
+        <input type="text" id="consultar/idade" placeholder="Idade">
+        <input type="text" id="consultar/nacionalidade" placeholder="Nacionalidade">
+        <button id="consultar/consultarAutor">Consultar</button>
+    </form>
+
+
+    <form id="formConsultarLivro">
+        <input type="text" id="consultar/titulo" placeholder="Título do Livro">
+        <select id="consultar/select_autores">
+            <option value= "" selected disabled>Selecione o autor</option>
+        </select>
+        <button id="consultar/consultarLivro">Consultar</button>
+    </form>
+
+    <br>
+
+    <form id="formAtualizarAutor">
+        <input type="text" id="atualizar/nome" placeholder="Nome do Autor">
+        <input type="text" id="atualizar/idade" placeholder="Idade">
+        <input type="text" id="atualizar/nacionalidade" placeholder="Nacionalidade">
+        <button id="atualizar/atualizarAutor">Atualizar</button>
+    </form>
+
+
+    <form id="formAtualizarLivro">
+        <input type="text" id="atualizar/titulo" placeholder="Título do Livro">
+        <select id="atualizar/select_autores">
+            <option value= "" selected disabled>Selecione o autor</option>
+        </select>
+        <button id="atualizar/atualizarLivro">Atualizar</button>
     </form>
 
     <br>
 
     <form id="formDeletarAutor">
-        <input type="text" id="atualizar/nome" placeholder="Nome do Autor">
-        <input type="text" id="atualizar/idade" placeholder="Idade">
-        <input type="text" id="atualizar/nacionalidade" placeholder="Nacionalidade">
-        <button id="cadastrarAutor">Deletar</button>
+        <input type="text" id="deletar/nome" placeholder="Nome do Autor">
+        <input type="text" id="deletar/idade" placeholder="Idade">
+        <input type="text" id="deletar/nacionalidade" placeholder="Nacionalidade">
+        <button id="deletar/deletarAutor">Deletar</button>
     </form>
 
 
     <form id="formDeletarLivro">
-        <input type="text" id="atualizar/titulo" placeholder="Título do Livro">
-        <select id="atualizar/select_autores">
+        <input type="text" id="deletar/titulo" placeholder="Título do Livro">
+        <select id="deletar/select_autores">
             <option value= "" selected disabled>Selecione o autor</option>
         </select>
-        <button id="cadastrarLivro">Deletar</button>
+        <button id="deletar/deletarLivro">Deletar</button>
     </form>
 
+    
+
+
     <script src="Cadastrar.js"></script>
-    <script src="Deletar.js"></script>
+    <script src="Consultar.js"></script>
     <script src="Atualizar.js"></script>
+    <script src="Deletar.js"></script>
 </body>
 </html>

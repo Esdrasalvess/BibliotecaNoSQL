@@ -63,21 +63,44 @@ async function serverGet(server, aba, função, collection, parâmetro_busca){
     });
     
 }
-    async function serverDelete(){
+
+async function serverDelete(){
 
     }
+
+async function serverCadastrar(server){
+    serverPost(server, 'cadastrar', 'cadastrarLivros', 'Livros');
+
+    serverPost(server, 'cadastrar', 'cadastrarAutores', 'Autores');
+        
+    serverGet(server, 'cadastrar', 'selectAutores', 'Autores', 'nome');
+
+}
+
+async function serverAtualizar(server){
+
+}
+
+async function serverDeletar(server){
+
+}
+
+async function serverConsultar(server){
+    serverGet(server, 'consultar', 'consultarLivros', 'Livros', 'titulo');
+    serverGet(server, 'consultar', 'consultarAutores', 'Autores', 'nome');
+
+    
+}
 
 async function iniciarRotas(server){
 
     try{
 
-        serverPost(server, 'cadastrar', 'cadastrarLivros', 'Livros');
+        serverCadastrar(server);
 
-        serverPost(server, 'cadastrar', 'cadastrarAutores', 'Autores');
-        
-        serverGet(server, 'cadastrar', 'selectAutores', 'Autores', 'nome');
+        serverConsultar(server);
 
-           
+
         server.post('/atualizar/atualizarAutores', async(req, res) => {
             const dado = req.body;
             try{
@@ -97,6 +120,9 @@ async function iniciarRotas(server){
                     res.status(500).send('Erro ao cadastrar o autor');
                 }
         })
+
+        serverGet(server, 'atualizar', 'selectAutores', 'Autores', 'nome');
+        serverGet(server, 'cadastrar', 'selectLivros', 'Livros', 'titulo');
 
         server.get('/atualizar/selectAutores', async (req, res) => {
             try {
