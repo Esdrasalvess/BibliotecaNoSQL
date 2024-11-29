@@ -9,15 +9,15 @@
 <body>
 
     <form id="formCadastrarAutor">
-        <input type="text" id="cadastrar/nome" placeholder="Nome do Autor">
-        <input type="text" id="cadastrar/idade" placeholder="Idade">
-        <input type="text" id="cadastrar/nacionalidade" placeholder="Nacionalidade">
+        <input type="text" id="cadastrar/nome_autor" placeholder="Nome do Autor" autocomplete="off">
+        <input type="text" id="cadastrar/idade_autor" placeholder="Idade" autocomplete="off">
+        <input type="text" id="cadastrar/nacionalidade_autor" placeholder="Nacionalidade" autocomplete="off">
         <button id="cadastrar/cadastrarAutor">Cadastrar</button>
     </form>
 
 
     <form id="formCadastrarLivro">
-        <input type="text" id="cadastrar/titulo" placeholder="Título do Livro">
+        <input type="text" id="cadastrar/titulo_livro" placeholder="Título do Livro" autocomplete="off">
         <select id="cadastrar/select_autores">
             <option value= "" selected disabled>Selecione o autor</option>
         </select>
@@ -26,22 +26,23 @@
 
     <br>
 
+
     <form id="formConsultarAutor">
-        <input type="text" id="consultar/nome" placeholder="Nome do Autor">
-        <input type="text" id="consultar/idade" placeholder="Idade">
-        <input type="text" id="consultar/nacionalidade" placeholder="Nacionalidade">
+        <input type="text" id="consultar/nome_autor" placeholder="Nome do Autor">
+        <input type="text" id="consultar/idade_autor" placeholder="Idade">
+        <input type="text" id="consultar/nacionalidade_autor" placeholder="Nacionalidade">
         <button id="consultar/consultarAutor">Consultar</button>
     </form>
 
+   
 
     <form id="formConsultarLivro">
-        <input type="text" id="consultar/titulo" placeholder="Título do Livro">
-        <select id="consultar/select_autores">
-            <option value= "" selected disabled>Selecione o autor</option>
-        </select>
+        <input type="text" id="consultar/titulo_livro" placeholder="Título do Livro">
+        <input type="text" id="consultar/nome_autor" placeholder="Autor">
         <button id="consultar/consultarLivro">Consultar</button>
     </form>
 
+    
     <br>
 
     <form id="formAtualizarAutor">
@@ -79,6 +80,7 @@
     </form>
 
     
+    <div id="consulta/tabela"></div>
 
 
     <script src="Cadastrar.js"></script>

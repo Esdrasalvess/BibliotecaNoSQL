@@ -4,7 +4,7 @@
 
     let mongo = mongoose.connect('mongodb://localhost:27017')
     const PORT = 3000;
-
+    const DatabaseBiblioteca = 'Biblioteca';
 
 async function iniciarServidor(){
         const server = express();
@@ -27,11 +27,11 @@ async function iniciarServidor(){
     }}
 
 
-async function serverPost(server, aba, função, collection){
+async function serverPost(server, aba, função, collection, database){
     server.post('/' + aba + '/' + função, async(req, res) => {
         const dado = req.body;
         try{
-            await cadastrar('Biblioteca', collection, dado);
+            await cadastrar(database, collection, dado);
                 res.status(200).send('Livro cadastrado com sucesso!');
             } catch (error) {
                 res.status(500).send('Erro ao cadastrar o livro');
@@ -39,18 +39,18 @@ async function serverPost(server, aba, função, collection){
     })
     }
 
-async function serverGet(server, aba, função, collection, parâmetro_busca){
+async function serverGet(server, aba, função, collection, dados_visíveis, database){
     server.get('/' + aba + '/' + função, async (req, res) => {
         try {
             switch(collection){
                 case 'Autores':
-                    const { Autores } = await common('Biblioteca');
-                    const buscaAutor = await Autores.find({}, parâmetro_busca); 
+                    const { Autores } = await common(database);
+                    const buscaAutor = await Autores.find({}, dados_visíveis); 
                     res.json(buscaAutor); 
                     break;
                 case 'Livros': 
-                    const { Livros } = await common('Biblioteca');
-                    const buscaLivro = await Livros.find({}, parâmetro_busca);
+                    const { Livros } = await common(database);
+                    const buscaLivro = await Livros.find({}, dados_visíveis);
                     res.json(buscaLivro);  
                     break;
                 default:
@@ -64,33 +64,35 @@ async function serverGet(server, aba, função, collection, parâmetro_busca){
     
 }
 
+
+
+
 async function serverDelete(){
 
     }
 
 async function serverCadastrar(server){
-    serverPost(server, 'cadastrar', 'cadastrarLivros', 'Livros');
+    let selectAutores = {nome: 1, idade: 1, nacionalidade: 1};
+    serverPost(server, 'cadastrar', 'cadastrarLivros', 'Livros', DatabaseBiblioteca);
+    serverPost(server, 'cadastrar', 'cadastrarAutores', 'Autores', DatabaseBiblioteca);
+    serverGet(server, 'common', 'selectAutores', 'Autores', selectAutores, DatabaseBiblioteca);
 
-    serverPost(server, 'cadastrar', 'cadastrarAutores', 'Autores');
-        
-    serverGet(server, 'cadastrar', 'selectAutores', 'Autores', 'nome');
+}
+
+async function serverConsultar(server){
+  
 
 }
 
 async function serverAtualizar(server){
-
+    serverGet(server, 'atualizar', 'atualizarLivros', );
 }
 
 async function serverDeletar(server){
 
 }
 
-async function serverConsultar(server){
-    serverGet(server, 'consultar', 'consultarLivros', 'Livros', 'titulo');
-    serverGet(server, 'consultar', 'consultarAutores', 'Autores', 'nome');
 
-    
-}
 
 async function iniciarRotas(server){
 
@@ -100,7 +102,10 @@ async function iniciarRotas(server){
 
         serverConsultar(server);
 
+        serverAtualizar(server);
 
+        serverDeletar(server);
+/*
         server.post('/atualizar/atualizarAutores', async(req, res) => {
             const dado = req.body;
             try{
@@ -110,7 +115,7 @@ async function iniciarRotas(server){
                     res.status(500).send('Erro ao cadastrar o autor');
                 }
         })
-/*
+
         server.post('/atualizar/atualizarLivros', async(req, res) => {
             const dado = req.body;
             try{
@@ -184,18 +189,15 @@ async function common(database) {
 
         const schemas = {
             Livros: new mongoose.Schema({
-                // Adicione campos conforme necessário
             }, { versionKey: false, strict: false }),
 
             Autores: new mongoose.Schema({
-                // Adicione campos conforme necessário
             }, { versionKey: false, strict: false })
         };
 
         const Livros = conexaodb.model('Livros', schemas.Livros);
         const Autores = conexaodb.model('Autores', schemas.Autores);
 
-        // Retorna ambos os modelos como um objeto
         return { Livros, Autores };
     }
 
@@ -218,13 +220,15 @@ async function cadastrar(database, collection, dado) {
                     break;
 
                 default:
-                    console.log('Coleção não reconhecida!');
+                    throw Error('Coleção não reconhecida');
                     break;
             }
 
             console.log('Collection ' + collection + ' Atualizado!');
+            return { ok: true, message: `${collection} atualizado com sucesso!` };
         } catch (error) {
             console.error('Erro ao adicionar ' + collection + ':', error);
+            return { ok: false, message: error.message };
         }
     }
 

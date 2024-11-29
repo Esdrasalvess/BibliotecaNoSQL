@@ -1,28 +1,31 @@
+async function erro(response, data){
+    if (response.ok && data.message != 'Coleção não reconhecida') {
+            alert('Cadastro realizado com sucesso!');
+    } else {
+        alert('Erro ao cadastrar. Coleção não identificada');
+    }
+}
+
 async function cadastrarLivros() {
-    
-    const titulo = document.getElementById('cadastrar/titulo').value;
+    const titulo_livro = document.getElementById('cadastrar/titulo_livro').value;
     const selectAutor = document.getElementById('cadastrar/select_autores').value;
     
     const dado = {
-        titulo: titulo,
+        titulo: titulo_livro,
         autor: selectAutor
     };
 
     try {
-
         const response = await fetch('/cadastrar/cadastrarLivros', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'  
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(dado)  
+            body: JSON.stringify(dado)
         });
+        const data = await response.json();
 
-        if (response.ok) {
-            console.log('Cadastro realizado com sucesso!');
-        } else {
-            alert('Erro ao cadastrar livro.');
-        }
+       erro(response, data);
     } catch (error) {
         console.error('Erro ao cadastrar:', error);
         alert('Erro ao cadastrar. Verifique o console.');
@@ -30,16 +33,17 @@ async function cadastrarLivros() {
 }
 
 async function cadastrarAutores() {
-    const nome = document.getElementById('cadastrar/nome').value;
-    const idade = document.getElementById('cadastrar/idade').value;
-    const nacionalidade = document.getElementById('cadastrar/nacionalidade').value;
+    const nome_autor = document.getElementById('cadastrar/nome_autor').value;
+    const idade_autor = document.getElementById('cadastrar/idade_autor').value;
+    const nacionalidade_autor = document.getElementById('cadastrar/nacionalidade_autor').value;
     
     const dado = {
-        nome: nome,
-        idade: idade,
-        nacionalidade: nacionalidade
+        nome: nome_autor,
+        idade: idade_autor,
+        nacionalidade: nacionalidade_autor
     };
 
+    
     try {
         const response = await fetch('/cadastrar/cadastrarAutores', {
             method: 'POST',
@@ -48,21 +52,21 @@ async function cadastrarAutores() {
             },
             body: JSON.stringify(dado)  
         });
+        const data = await response.json();
+        
+        erro(response, data);
 
-        if (response.ok) {
-            alert('Cadastro realizado com sucesso!');
-        } else {
-            alert('Erro ao cadastrar livro.');
-        }
     } catch (error) {
-       console.log('Erro ao cadastrar:', error);
+        console.error('Erro ao cadastrar:', error);
         alert('Erro ao cadastrar. Verifique o console.');
     }
 }
 
 async function carregarAutores() {
+    const selectAutor = document.getElementById('cadastrar/select_autores');
+
     try {
-        const response = await fetch('/cadastrar/selectAutores');  
+        const response = await fetch('/common/selectAutores');  
 
         if (!response.ok) {
             throw new Error('Falha ao carregar autores, status: ' + response.status);
@@ -70,26 +74,17 @@ async function carregarAutores() {
 
         const autores = await response.json();  
 
-
-
-        const selectAutor = document.getElementById('cadastrar/select_autores');
-
-        if (!selectAutor) {
-            throw new Error('Elemento de seleção não encontrado');
-        }
-
-        selectAutor.innerHTML = '<option value= "" selected disabled>Selecione o autor</option>';  
-
-
-        if (Array.isArray(autores) && autores.length > 0) {
-            autores.forEach(autor => {
-                if (autor._id && autor.nome) {
+         
+        if ( autores.length > 0) {
+            autores.forEach(autor => { 
+                if (autor.nome || autor.idade || autor.nacionalidade) {
                     const option = document.createElement('option');
                     option.value = autor.nome;
-                    option.textContent = autor.nome;  
+                    option.textContent = autor.nome + ' - ' + autor.idade + ' - ' + autor.nacionalidade;  
                     selectAutor.appendChild(option);
                 } else {
-                    console.error('Autor sem _id ou nome:', autor);
+                    console.error('Autor sem nome:', autor);
+                    
                 }
             });
         } else {
@@ -101,7 +96,6 @@ async function carregarAutores() {
 }
 
 
-window.onload = carregarAutores;
 
 const botaocadastrarLivros = document.getElementById("cadastrar/cadastrarLivro");
 botaocadastrarLivros.addEventListener("click", cadastrarLivros);
