@@ -13,12 +13,7 @@ async function carregarAutores() {
          
         if ( autores.length > 0) {
             autores.forEach(autor => { 
-                if (autor.nome || autor.idade || autor.nacionalidade) {
-                    const option = document.createElement('option');
-                    option.value = autor.nome;
-                    option.textContent = autor.nome + ' - ' + autor.idade + ' - ' + autor.nacionalidade;  
-                    selectAutor.appendChild(option);
-                }
+            
             });
         } else {
             console.log('Nenhum autor encontrado');

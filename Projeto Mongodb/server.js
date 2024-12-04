@@ -1,7 +1,6 @@
     const express = require('express');
     const path = require('path');
     const mongoose = require('mongoose');
-const { type } = require('os');
 
     let mongo = mongoose.connect('mongodb://localhost:27017')
     const PORT = 3000;
@@ -17,15 +16,6 @@ async function iniciarServidor(){
         try{
             server.get('/', (req, res) => {
                 res.sendFile(path.join(__dirname, 'index.html'));
-            });
-            server.get('/', (req, res) => {
-                res.sendFile(path.join(__dirname, 'cadastro_autor.html'));
-            });
-            server.get('/cadastro_livro', (req, res) => {
-                res.sendFile(path.join(__dirname, 'cadastro_livro.html'));
-            });
-            server.get('/consulta', (req, res) => {
-                res.sendFile(path.join(__dirname, 'consulta.html'));
             });
 
             server.listen(PORT, ()=>

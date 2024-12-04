@@ -1,18 +1,35 @@
 async function cadastrarLivros() {
     const titulo_livro = document.getElementById('cadastrar/titulo_livro').value;
-    const selectAutor = document.getElementById('cadastrar/select_autores').value;
+    const selectAutor1 = document.getElementById('cadastrar/select_autores1').value;
+    const selectAutor2 = document.getElementById('cadastrar/select_autores2').value;
+    const selectAutor3 = document.getElementById('cadastrar/select_autores3').value;
     const idLivro = document.getElementById('cadastrar/id_livro').value;
     
+    const autores_disponiveis = [];
+    if (selectAutor1) autores_disponiveis.push(selectAutor1);
+    if (selectAutor2) autores_disponiveis.push(selectAutor2);
+    if (selectAutor3) autores_disponiveis.push(selectAutor3);
+
+    if(autores_disponiveis.length == 0){
+        alert("É necessário ao menos um autor!");
+        return;
+    }
+    const autoresUnicos = new Set(autores_disponiveis);
+    if (autoresUnicos.size !== autores_disponiveis.length) {
+        alert("Autor duplicado! Por favor, selecione autores diferentes.");
+        return;
+    }
+
     dado = {
         titulo: titulo_livro,
-        autor: selectAutor,
+        autores: autores_disponiveis,
     };
 
 if(idLivro !== ""){
     dado = {
         _id: idLivro,
         titulo: titulo_livro,
-        autor: selectAutor,
+        autores: autores_disponiveis,
     };
 }
 
@@ -39,7 +56,7 @@ async function cadastrarAutores() {
     const idAutor = document.getElementById('cadastrar/id_autor').value;
     let dado;
 
-        dado = {
+    dado = {
             nome: nome_autor,
             idade: idade_autor,
             nacionalidade: nacionalidade_autor
@@ -66,8 +83,6 @@ async function cadastrarAutores() {
         const mensagem = await response.text(); 
         if(response.ok){
             alert("Autor cadastrado com sucesso!");
-        }else{
-            alert(mensagem);
         }
         
     } catch (error) {
@@ -98,11 +113,14 @@ async function carregarAutores() {
                     const option = document.createElement('option');
                     option.value = autor.nome;
                     option.textContent = autor.nome + ' - ' + autor.idade + ' - ' + autor.nacionalidade;  
-                    selectAutor1.appendChild(option);
-                    selectAutor2.appendChild(option);
-                    selectAutor3.appendChild(option);
+                    selectAutor1.appendChild(option.cloneNode(true));
+                    selectAutor2.appendChild(option.cloneNode(true));
+                    selectAutor3.appendChild(option.cloneNode(true));
                 }
             });
+            selectAutor1.addEventListener('change', () => atualizarOpcoes(selectAutor1, selectAutor2, selectAutor3));
+
+
         } else {
             console.log('Nenhum autor encontrado');
         }
@@ -113,7 +131,23 @@ async function carregarAutores() {
     }
 }
 
+function atualizarOpcoes(selectAtual, ...outrosSelects) {
+    const selecionados = [
+        selectAtual.value,
+        ...Array.from(outrosSelects).map(select => select.value)
+    ];
 
+    // Remove opções de autores já selecionados
+    outrosSelects.forEach(select => {
+        Array.from(select.options).forEach(option => {
+            if (selecionados.includes(option.value)) {
+                option.style.display = 'none';  // Torna a opção invisível
+            } else {
+                option.style.display = '';  // Exibe a opção novamente
+            }
+        });
+    });
+}
 
 const botaocadastrarLivros = document.getElementById("cadastrar/cadastrarLivro");
 botaocadastrarLivros.addEventListener("click", cadastrarLivros);
