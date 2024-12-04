@@ -63,11 +63,17 @@ async function cadastrarAutores() {
             body: JSON.stringify(dado)  
         });
 
-        alert("Autor cadastrado com sucesso!");
+        const mensagem = await response.text(); 
+        if(response.ok){
+            alert("Autor cadastrado com sucesso!");
+        }else{
+            alert(mensagem);
+        }
         
     } catch (error) {
         console.error('Erro ao cadastrar:', error);
-        alert('Erro: id já existente');
+        console.log(mensagem);
+        alert(`Erro:  id já existente`);
     }
 }
 

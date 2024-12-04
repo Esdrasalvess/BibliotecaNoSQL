@@ -37,22 +37,29 @@ async function iniciarServidor(){
     }}
 
 
-async function serverPost(server, aba, função, collection, database){
-    server.post('/' + aba + '/' + função, async(req, res) => {
-        const dado = req.body;
-        try{
-            await cadastrar(database, collection, dado);
-                res.status(200).send(`cadastro de ${collection} foi um sucesso!`);
+    async function serverPost(server, aba, função, collection, database) {
+        server.post('/' + aba + '/' + função, async (req, res) => {
+            const dado = req.body;
+    
+            try {
+                // Tenta cadastrar o item no banco de dados
+                await cadastrar(database, collection, dado);
+    
+                // Responde com sucesso
+                return res.status(200).json({ message: `Cadastro de ${collection} foi um sucesso!` });
             } catch (error) {
-                res.status(500).send(`Erro ao cadastrar ${collection}`);
+                // Verifica erro de duplicidade de ID
                 if (error.code === 11000) {
-                    res.status(400).send(`Erro: O ${collection} com o ID já existe.`);
-                } else {
-                    res.status(500).send(`Erro ao cadastrar ${collection}`);
+                    return res.status(400).json({ message: `Erro: O ${collection} com o ID já existe.` });
                 }
+    
+                // Para outros erros, responde com status 500
+                console.error('Erro no servidor:', error);
+                return res.status(500).json({ message: `Erro ao cadastrar ${collection}.` });
             }
-    })
+        });
     }
+    
 
 async function serverGet(server, aba, função, collection, dados_visíveis, database){
     server.get('/' + aba + '/' + função, async (req, res) => {
