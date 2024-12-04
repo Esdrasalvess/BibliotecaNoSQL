@@ -1,4 +1,4 @@
-.cadastro {
+.consultas {
     border: 2px solid black;
     background-color: blue;
 
@@ -14,56 +14,34 @@
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.225);
 }
 
-.cadastro h2 {
-    font-weight: normal;
-    color: white;
-    background-color: chartreuse;
-    text-align: center;
-}
-
 form {
     background-color: blueviolet;
-    height: 270px;
+    height: 50px;
     width: 900px;
     margin: auto;
 }
 
 input {
-    height: 50px;
-    width: 400px;
+    height: 20px;
+    width: 180px;
 
-    font-size: 20px;
     padding: 5px;
 
     display: block;
     margin: auto;
 }
 
-select {
-    height: 50px;
-    width: 250px;
-
-    font-size: 20px;
-    padding: 5px;
-
-    display: block;
-    margin: auto; 
-}
-
 .colunas{
+    margin: auto;
     background-color: cornflowerblue;
-    height: 100px;
-    width: 900px;
+    height: 50px;
+    width: 800px;
 
     display: flex;
     flex-wrap: wrap;
 }
 
 button {
-    
-    display: block;
-    margin: auto;
-
     height: 50px;
     width: 100px;
 }
