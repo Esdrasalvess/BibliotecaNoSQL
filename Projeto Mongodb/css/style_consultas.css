@@ -1,6 +1,6 @@
 .consultas {
-    border: 2px solid black;
-    background-color: blue;
+    
+    background-color: #9198e5;
 
     height: 300px;
     width: 900px;
@@ -12,6 +12,9 @@
     margin-bottom: 10px;
 
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.225);
+
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
 }
 
 form {
@@ -33,17 +36,19 @@ input {
 
 .colunas{
     margin: auto;
-    background-color: cornflowerblue;
+    background-color: red;
     height: 50px;
-    width: 800px;
+    width: 700px;
 
     display: flex;
     flex-wrap: wrap;
 }
 
 button {
-    height: 50px;
+    height: 40px;
     width: 100px;
+    margin-top: 4px;
+    margin-left: 2px;
 }
 
 button:hover  {
@@ -52,4 +57,15 @@ button:hover  {
     color: black;
 
     transition-duration: 0.4s;
+}
+
+.consultas h2 {
+    font-weight: normal;
+    color: white;
+    background-color: #102542;
+    
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+
+    text-indent: 16px;
 }

@@ -25,17 +25,31 @@
 
     <main>
        <div class="consultas">
+        <h2>Consulta Autor</h2>
         <form id="formConsultarAutor">
             <div class="colunas">
                 <input type="text" id="consultar/nome_autor" placeholder="Nome do Autor">
                 <input type="text" id="consultar/idade_autor" placeholder="Idade">
                 <input type="text" id="consultar/nacionalidade_autor" placeholder="Nacionalidade">
                 <button id="consultar/consultarAutor">Consultar</button>
+
+                <table id="tabela-autores">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Idade</th>
+                            <th>Nacionalidade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </form>
        </div>
 
        <div class="consultas">
+        <h2>Consulta Livros</h2>
         <form id="formConsultarLivro">
             <div class="colunas">
                 <input type="text" id="consultar/titulo_livro" placeholder="Título do Livro">
@@ -47,7 +61,7 @@
     </main>
 
     <footer>
-        <p>Site como projeto para Banco de Dados</p>
+        <p>Site como projeto para <strong>Banco de Dados</strong></p>
     </footer>
 
     <script src="Cadastrar.js"></script>
