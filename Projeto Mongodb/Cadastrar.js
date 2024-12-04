@@ -9,6 +9,7 @@ async function cadastrarLivros() {
     if (selectAutor1) autores_disponiveis.push(selectAutor1);
     if (selectAutor2) autores_disponiveis.push(selectAutor2);
     if (selectAutor3) autores_disponiveis.push(selectAutor3);
+
     if(autores_disponiveis.length == 0){
         alert("É necessário ao menos um autor!");
         return;
@@ -22,7 +23,6 @@ async function cadastrarLivros() {
     dado = {
         titulo: titulo_livro,
         autores: autores_disponiveis,
-        autores_nome: autores_disponiveis.nome
     };
 
 if(idLivro !== ""){
@@ -30,7 +30,6 @@ if(idLivro !== ""){
         _id: idLivro,
         titulo: titulo_livro,
         autores: autores_disponiveis,
-        autores_nome: autores_disponiveis.nome
     };
 }
 
@@ -60,40 +59,44 @@ async function cadastrarAutores() {
     const idade_autor = document.getElementById('cadastrar/idade_autor').value;
     const nacionalidade_autor = document.getElementById('cadastrar/nacionalidade_autor').value;
     const idAutor = document.getElementById('cadastrar/id_autor').value;
+    let dado;
 
-    let dado = {
+    dado = {
         nome: nome_autor,
         idade: idade_autor,
         nacionalidade: nacionalidade_autor
     };
 
     if (idAutor !== "") {
-        dado._id = idAutor;
+        dado = {
+            _id: idAutor,
+            nome: nome_autor,
+            idade: idade_autor,
+            nacionalidade: nacionalidade_autor
+        };
     }
 
     try {
         const response = await fetch('/cadastrar/cadastrarAutores', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'  
             },
-            body: JSON.stringify(dado),
+            body: JSON.stringify(dado)  
         });
 
         if (response.ok) {
-            // Quando o status HTTP é 200
             alert("Autor cadastrado com sucesso!");
         } else {
-            // Quando o status HTTP não é 200
-            const mensagemErro = await response.json(); // O servidor deve enviar um JSON
-            alert(`Erro ao cadastrar autor: ${mensagemErro.message || 'Erro desconhecido'}`);
+            const mensagem = await response.text(); 
+            alert(`Erro ao cadastrar autor: ${mensagem}`);
         }
+        
     } catch (error) {
-        console.error('Erro ao cadastrar:', error);
-        alert(`Erro ao cadastrar autor: ${error.message || 'Erro desconhecido'}`);
+        console.error('Erro ao cadastrar:', error); // Exibe o erro no console
+        alert(`Erro ao cadastrar autor: ${error.message || 'Erro desconhecido'}`); // Mostra o erro no alerta
     }
 }
-
 
 
 async function carregarAutores() {
@@ -112,13 +115,10 @@ async function carregarAutores() {
 
          
         if ( autores.length > 0) {
-           
             autores.forEach(autor => { 
-                alert('Autor:', autor);
-                console.log('Autor', autor);
                 if (autor.nome || autor.idade || autor.nacionalidade) {
                     const option = document.createElement('option');
-                    option.value = autor._id;
+                    option.value = autor.nome;
                     option.textContent = autor.nome + ' - ' + autor.idade + ' - ' + autor.nacionalidade;  
                     selectAutor1.appendChild(option.cloneNode(true));
                     selectAutor2.appendChild(option.cloneNode(true));
@@ -146,12 +146,13 @@ function atualizarOpcoes(selectAtual, ...outrosSelects) {
         ...Array.from(outrosSelects).map(select => select.value)
     ];
 
+    // Remove opções de autores já selecionados
     outrosSelects.forEach(select => {
         Array.from(select.options).forEach(option => {
             if (selecionados.includes(option.value)) {
-                option.style.display = 'none'; 
+                option.style.display = 'none';  // Torna a opção invisível
             } else {
-                option.style.display = ''; 
+                option.style.display = '';  // Exibe a opção novamente
             }
         });
     });
