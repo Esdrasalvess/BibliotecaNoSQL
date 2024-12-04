@@ -9,6 +9,7 @@
 <body>
 
     <form id="formCadastrarAutor">
+        <input type="text" id="cadastrar/id_autor" placeholder="Id Autor(opcional)" autocomplete="off">
         <input type="text" id="cadastrar/nome_autor" placeholder="Nome do Autor" autocomplete="off">
         <input type="text" id="cadastrar/idade_autor" placeholder="Idade" autocomplete="off">
         <input type="text" id="cadastrar/nacionalidade_autor" placeholder="Nacionalidade" autocomplete="off">
@@ -17,8 +18,15 @@
 
 
     <form id="formCadastrarLivro">
+        <input type="text" id="cadastrar/id_livro" placeholder="Id Livro(opcional)" autocomplete="off">
         <input type="text" id="cadastrar/titulo_livro" placeholder="Título do Livro" autocomplete="off">
-        <select id="cadastrar/select_autores">
+        <select id="cadastrar/select_autores1">
+            <option value= "" selected disabled>Selecione o autor</option>
+        </select>
+        <select id="cadastrar/select_autores2">
+            <option value= "" selected disabled>Selecione o autor</option>
+        </select>
+        <select id="cadastrar/select_autores3">
             <option value= "" selected disabled>Selecione o autor</option>
         </select>
         <button id="cadastrar/cadastrarLivro">Cadastrar</button>

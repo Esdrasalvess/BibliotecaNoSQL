@@ -1,19 +1,20 @@
-async function erro(response, data){
-    if (response.ok && data.message != 'Coleção não reconhecida') {
-            alert('Cadastro realizado com sucesso!');
-    } else {
-        alert('Erro ao cadastrar. Coleção não identificada');
-    }
-}
-
 async function cadastrarLivros() {
     const titulo_livro = document.getElementById('cadastrar/titulo_livro').value;
     const selectAutor = document.getElementById('cadastrar/select_autores').value;
+    const idLivro = document.getElementById('cadastrar/id_livro').value;
     
-    const dado = {
+    dado = {
         titulo: titulo_livro,
-        autor: selectAutor
+        autor: selectAutor,
     };
+
+if(idLivro !== ""){
+    dado = {
+        _id: idLivro,
+        titulo: titulo_livro,
+        autor: selectAutor,
+    };
+}
 
     try {
         const response = await fetch('/cadastrar/cadastrarLivros', {
@@ -23,12 +24,11 @@ async function cadastrarLivros() {
             },
             body: JSON.stringify(dado)
         });
-        const data = await response.json();
-
-       erro(response, data);
+        alert("Livro cadastrado com sucesso!");
+      
     } catch (error) {
         console.error('Erro ao cadastrar:', error);
-        alert('Erro ao cadastrar. Verifique o console.');
+        alert('Erro: id já existente');
     }
 }
 
@@ -36,13 +36,23 @@ async function cadastrarAutores() {
     const nome_autor = document.getElementById('cadastrar/nome_autor').value;
     const idade_autor = document.getElementById('cadastrar/idade_autor').value;
     const nacionalidade_autor = document.getElementById('cadastrar/nacionalidade_autor').value;
-    
-    const dado = {
-        nome: nome_autor,
-        idade: idade_autor,
-        nacionalidade: nacionalidade_autor
-    };
+    const idAutor = document.getElementById('cadastrar/id_autor').value;
+    let dado;
 
+        dado = {
+            nome: nome_autor,
+            idade: idade_autor,
+            nacionalidade: nacionalidade_autor
+        };
+    if(idAutor !== ""){
+        dado = {
+            _id: idAutor,
+            nome: nome_autor,
+            idade: idade_autor,
+            nacionalidade: nacionalidade_autor
+        };
+    }
+    
     
     try {
         const response = await fetch('/cadastrar/cadastrarAutores', {
@@ -52,18 +62,19 @@ async function cadastrarAutores() {
             },
             body: JSON.stringify(dado)  
         });
-        const data = await response.json();
-        
-        erro(response, data);
 
+        alert("Autor cadastrado com sucesso!");
+        
     } catch (error) {
         console.error('Erro ao cadastrar:', error);
-        alert('Erro ao cadastrar. Verifique o console.');
+        alert('Erro: id já existente');
     }
 }
 
 async function carregarAutores() {
-    const selectAutor = document.getElementById('cadastrar/select_autores');
+    const selectAutor1 = document.getElementById('cadastrar/select_autores1');
+    const selectAutor2 = document.getElementById('cadastrar/select_autores2');
+    const selectAutor3 = document.getElementById('cadastrar/select_autores3');
 
     try {
         const response = await fetch('/common/selectAutores');  
@@ -81,15 +92,16 @@ async function carregarAutores() {
                     const option = document.createElement('option');
                     option.value = autor.nome;
                     option.textContent = autor.nome + ' - ' + autor.idade + ' - ' + autor.nacionalidade;  
-                    selectAutor.appendChild(option);
-                } else {
-                    console.error('Autor sem nome:', autor);
-                    
+                    selectAutor1.appendChild(option);
+                    selectAutor2.appendChild(option);
+                    selectAutor3.appendChild(option);
                 }
             });
         } else {
             console.log('Nenhum autor encontrado');
         }
+
+
     } catch (error) {
         console.error('Erro ao carregar autores:', error);  
     }

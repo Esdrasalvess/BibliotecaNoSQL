@@ -1,6 +1,7 @@
     const express = require('express');
     const path = require('path');
     const mongoose = require('mongoose');
+const { type } = require('os');
 
     let mongo = mongoose.connect('mongodb://localhost:27017')
     const PORT = 3000;
@@ -32,9 +33,14 @@ async function serverPost(server, aba, função, collection, database){
         const dado = req.body;
         try{
             await cadastrar(database, collection, dado);
-                res.status(200).send('Livro cadastrado com sucesso!');
+                res.status(200).send(`cadastro de ${collection} foi um sucesso!`);
             } catch (error) {
-                res.status(500).send('Erro ao cadastrar o livro');
+                res.status(500).send(`Erro ao cadastrar ${collection}`);
+                if (error.code === 11000) {
+                    res.status(400).send(`Erro: O ${collection} com o ID já existe.`);
+                } else {
+                    res.status(500).send(`Erro ao cadastrar ${collection}`);
+                }
             }
     })
     }
@@ -201,36 +207,79 @@ async function common(database) {
         return { Livros, Autores };
     }
 
+    async function commonId(database) {
+        const conexaodb = mongoose.connection.useDb(database);
+
+        const schemas = {
+            Livros: new mongoose.Schema({
+                _id:{type: String}
+            }, { versionKey: false, strict: false }),
+
+            Autores: new mongoose.Schema({
+                _id:{type: String}
+            }, { versionKey: false, strict: false })
+        };
+
+        const LivrosId = conexaodb.model('Livros', schemas.Livros);
+        const AutoresId = conexaodb.model('Autores', schemas.Autores);
+
+        return { LivrosId, AutoresId };
+    }
+
+  
+
 
 
 async function cadastrar(database, collection, dado) {
         try {
             const { Livros, Autores } = await common(database);
-
+            const { LivrosId, AutoresId } = await commonId(database);
+    
             let resultado;
+          
             switch (collection) {
                 case 'Livros':
-                    resultado = await dadosLivros(Livros, dado);
+
+                  
+                    if(dado._id){
+                        resultado = await dadosLivros(LivrosId, dado);
+                    }else{
+                        resultado = await dadosLivros(Livros, dado);
+                    }
+                   
+
                     console.log('Livro adicionado:', resultado);
                     break;
-
+                    
                 case 'Autores':
-                    resultado = await dadosAutores(Autores, dado);
+
+                    if(dado._id){
+                        resultado = await dadosAutores(AutoresId,  dado);
+                    }else{
+                        resultado = await dadosAutores(Autores, dado);
+                    }
+                    
                     console.log('Autor adicionado:', resultado);
                     break;
-
+                
                 default:
                     throw Error('Coleção não reconhecida');
                     break;
             }
 
             console.log('Collection ' + collection + ' Atualizado!');
-            return { ok: true, message: `${collection} atualizado com sucesso!` };
+            
         } catch (error) {
-            console.error('Erro ao adicionar ' + collection + ':', error);
-            return { ok: false, message: error.message };
-        }
+
+            if (error.code === 11000) {
+                console.error(`Erro: O ID '${error.keyValue._id}' já existe na coleção '${collection}'.`);
+            } else {
+                console.error('Erro ao cadastrar:', error.message || error);
+            }
     }
+}
+
+
 
 async function deletar(database, collection, criterio){
         const { Livros, Autores } = await common(database);
