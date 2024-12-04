@@ -38,17 +38,14 @@ async function iniciarServidor(){
                 // Responde com sucesso
                 return res.status(200).json({ message: `Cadastro de ${collection} foi um sucesso!` });
             } catch (error) {
-                // Verifica erro de duplicidade de ID
-                if (error.code === 11000) {
-                    return res.status(400).json({ message: `Erro: O ${collection} com o ID já existe.` });
-                }
-    
-                // Para outros erros, responde com status 500
-                console.error('Erro no servidor:', error);
-                return res.status(500).json({ message: `Erro ao cadastrar ${collection}.` });
+                // Retorna erro com status e mensagem apropriada
+                const status = error.status || 500;
+                const message = error.message || 'Erro interno do servidor.';
+                return res.status(status).json({ message });
             }
         });
     }
+    
     
 
 async function serverGet(server, aba, função, collection, dados_visíveis, database){
@@ -242,48 +239,38 @@ async function cadastrar(database, collection, dado) {
             const { LivrosId, AutoresId } = await commonId(database);
     
             let resultado;
-          
+    
             switch (collection) {
                 case 'Livros':
-
-                  
-                    if(dado._id){
-                        resultado = await dadosLivros(LivrosId, dado);
-                    }else{
-                        resultado = await dadosLivros(Livros, dado);
-                    }
-                   
-
+                    resultado = dado._id
+                        ? await dadosLivros(LivrosId, dado)
+                        : await dadosLivros(Livros, dado);
                     console.log('Livro adicionado:', resultado);
                     break;
-                    
+    
                 case 'Autores':
-
-                    if(dado._id){
-                        resultado = await dadosAutores(AutoresId,  dado);
-                    }else{
-                        resultado = await dadosAutores(Autores, dado);
-                    }
-                    
+                    resultado = dado._id
+                        ? await dadosAutores(AutoresId, dado)
+                        : await dadosAutores(Autores, dado);
                     console.log('Autor adicionado:', resultado);
                     break;
-                
+    
                 default:
-                    throw Error('Coleção não reconhecida');
-                    break;
+                    throw new Error('Coleção não reconhecida');
             }
-
+    
             console.log('Collection ' + collection + ' Atualizado!');
-            
         } catch (error) {
-
             if (error.code === 11000) {
                 console.error(`Erro: O ID '${error.keyValue._id}' já existe na coleção '${collection}'.`);
+                throw { status: 400, message: `Erro: O ID '${error.keyValue._id}' já existe na coleção '${collection}'.` };
             } else {
                 console.error('Erro ao cadastrar:', error.message || error);
+                throw { status: 500, message: `Erro ao cadastrar ${collection}.` };
             }
+        }
     }
-}
+    
 
 
 

@@ -59,45 +59,41 @@ async function cadastrarAutores() {
     const idade_autor = document.getElementById('cadastrar/idade_autor').value;
     const nacionalidade_autor = document.getElementById('cadastrar/nacionalidade_autor').value;
     const idAutor = document.getElementById('cadastrar/id_autor').value;
-    let dado;
 
-    dado = {
-            nome: nome_autor,
-            idade: idade_autor,
-            nacionalidade: nacionalidade_autor
-        };
-    if(idAutor !== ""){
-        dado = {
-            _id: idAutor,
-            nome: nome_autor,
-            idade: idade_autor,
-            nacionalidade: nacionalidade_autor
-        };
+    let dado = {
+        nome: nome_autor,
+        idade: idade_autor,
+        nacionalidade: nacionalidade_autor
+    };
+
+    if (idAutor !== "") {
+        dado._id = idAutor;
     }
-    
-    
+
     try {
         const response = await fetch('/cadastrar/cadastrarAutores', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'  
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(dado)  
+            body: JSON.stringify(dado),
         });
 
         if (response.ok) {
+            // Quando o status HTTP é 200
             alert("Autor cadastrado com sucesso!");
         } else {
-            const mensagem = await response.text(); 
-            alert(`Erro ao cadastrar autor: ${mensagem}`);
+            // Quando o status HTTP não é 200
+            const mensagemErro = await response.json(); // O servidor deve enviar um JSON
+            alert(`Erro ao cadastrar autor: ${mensagemErro.message || 'Erro desconhecido'}`);
         }
-        
     } catch (error) {
         console.error('Erro ao cadastrar:', error);
-        console.log(mensagem);
-        alert(`Erro:  id já existente`);
+        alert(`Erro ao cadastrar autor: ${error.message || 'Erro desconhecido'}`);
     }
 }
+
+
 
 async function carregarAutores() {
     const selectAutor1 = document.getElementById('cadastrar/select_autores1');
