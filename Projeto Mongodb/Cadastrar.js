@@ -85,9 +85,11 @@ async function cadastrarAutores() {
             body: JSON.stringify(dado)  
         });
 
-        const mensagem = await response.text(); 
-        if(response.ok){
+        if (response.ok) {
             alert("Autor cadastrado com sucesso!");
+        } else {
+            const mensagem = await response.text(); 
+            alert(`Erro ao cadastrar autor: ${mensagem}`);
         }
         
     } catch (error) {
