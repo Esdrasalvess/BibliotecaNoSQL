@@ -119,7 +119,9 @@ async function carregarAutores() {
                 }
             });
             selectAutor1.addEventListener('change', () => atualizarOpcoes(selectAutor1, selectAutor2, selectAutor3));
-
+            selectAutor2.addEventListener('change', () => atualizarOpcoes(selectAutor1, selectAutor2, selectAutor3));
+            selectAutor3.addEventListener('change', () => atualizarOpcoes(selectAutor1, selectAutor2, selectAutor3));
+       
 
         } else {
             console.log('Nenhum autor encontrado');
