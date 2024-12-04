@@ -1,0 +1,82 @@
+
+main  {
+    
+}
+
+.cadastro {
+    border: 2px solid black;
+    background-color: blue;
+
+    height: 300px;
+    width: 900px;
+    margin: auto;
+    
+    position: relative;
+    top: 20px;
+
+    margin-bottom: 10px;
+
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.225);
+}
+
+.cadastro h2 {
+    font-weight: normal;
+    color: white;
+    background-color: chartreuse;
+    text-align: center;
+}
+
+form {
+    background-color: blueviolet;
+    height: 270px;
+    width: 900px;
+    margin: auto;
+}
+
+input {
+    height: 50px;
+    width: 400px;
+
+    font-size: 20px;
+    padding: 5px;
+
+    display: block;
+    margin: auto;
+}
+
+select {
+    height: 50px;
+    width: 250px;
+
+    font-size: 20px;
+    padding: 5px;
+
+    display: block;
+    margin: auto; 
+}
+
+.colunas{
+    background-color: cornflowerblue;
+    height: 100px;
+    width: 900px;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+button {
+    
+    display: block;
+    margin: auto;
+
+    height: 50px;
+    width: 100px;
+}
+
+button:hover  {
+    cursor: pointer;
+    background-color: greenyellow;
+    color: black;
+
+    transition-duration: 0.4s;
+}

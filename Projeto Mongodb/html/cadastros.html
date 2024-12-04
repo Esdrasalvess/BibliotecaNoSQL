@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca NoSQL</title>
+    <link rel="shortcut icon" href="../imgs/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style_cadastros.css">
+   
+</head>
+
+<body>
+
+
+    <header>
+        <h1>Biblioteca NoSQL</h1>
+        <p>Banco De Dados</p>
+    </header>
+
+    <nav>
+        <a href="index2.html">Página Inicial</a>
+        <a href="cadastros.html">Cadastros</a>
+        <a href="consultas.html">Consultas</a>
+    </nav>
+
+    <main>
+        <div class="cadastro">
+            <h2>Cadastro Autor</h2>
+            <form id="formCadastrarAutor">
+                <div class="colunas">
+                    <input type="text" id="cadastrar/id_autor" placeholder="Id Autor(opcional)" autocomplete="off">
+                    <input type="text" id="cadastrar/nome_autor" placeholder="Nome do Autor" autocomplete="off">
+                </div>
+                <div class="colunas">
+                    <input type="text" id="cadastrar/idade_autor" placeholder="Idade" autocomplete="off">
+                    <input type="text" id="cadastrar/nacionalidade_autor" placeholder="Nacionalidade" autocomplete="off">
+                </div>
+                <button id="cadastrar/cadastrarAutor">Cadastrar</button>
+            </form>
+        </div>
+
+        <div class="cadastro">
+            <h2>Cadastro Livro</h2>
+            <form id="formCadastrarLivro">
+                <div class="colunas">
+                    <input type="text" id="cadastrar/id_livro" placeholder="Id Livro(opcional)" autocomplete="off">
+                    <input type="text" id="cadastrar/titulo_livro" placeholder="Título do Livro" autocomplete="off">
+                </div>
+                <div  class="colunas">
+                    <select id="cadastrar/select_autores1">
+                        <option value= "" selected disabled>Selecione o autor</option>
+                    </select>
+                    <select id="cadastrar/select_autores2">
+                        <option value= "" selected disabled>Selecione o autor</option>
+                    </select>
+                    <select id="cadastrar/select_autores3">
+                        <option value= "" selected disabled>Selecione o autor</option>
+                    </select>
+                </div>
+                <button id="cadastrar/cadastrarLivro">Cadastrar</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>Site como projeto para <strong>Banco de Dados</strong></p>
+    </footer>
+
+
+    <script src="Cadastrar.js"></script>
+    <script src="Consultar.js"></script>
+    <script src="Atualizar.js"></script>
+    <script src="Deletar.js"></script>
+</body>
+
+</html>
