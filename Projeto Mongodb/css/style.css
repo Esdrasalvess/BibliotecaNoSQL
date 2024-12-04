@@ -2,3 +2,67 @@
     margin: 0px;
     padding: 0px;
 }
+
+header {
+    background-color: purple;
+    height: 130px;
+}
+
+header h1 {
+    font-size: 3em;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: normal;
+
+    text-align: center;
+
+    padding-top: 20px;
+
+    color: white;
+}
+
+header p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+
+    text-align: center;
+    margin-top: 5px;
+
+    color: white;
+
+}
+
+body {
+    background-color: white;
+    height: 100vh;
+
+}
+
+nav {
+    background-color: yellowgreen;
+    height: 20px;
+    padding-top: 5px;
+    padding-bottom: 2px;
+}
+
+nav a {
+    margin-left: 7px;
+    text-decoration: none;
+    color: white;
+}
+
+nav a:hover {
+    background-color: rgb(255, 0, 242);
+    transition-duration: 0.4s;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+
+footer {
+    background-color: black;
+}
+
+footer p {
+    color: white;
+    text-align: center;
+}

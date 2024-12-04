@@ -1,0 +1,40 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+main {
+    height: 100vh;
+    background-color: red;
+    width: 1200px;
+    margin: auto;
+}
+
+
+article {
+
+    padding: 10px;
+
+    position: relative;
+    top: 30px;
+
+    height: 380x;
+    width: 600px;
+ 
+    margin: auto; 
+    
+    background-color: chocolate;
+}
+
+article h2  {
+    font-weight: normal;
+    font-family: serif;
+    
+}
+
+article p {
+    font-family: sans-serif;
+    
+    line-height: 1.5;
+    text-align: justify;
+}
