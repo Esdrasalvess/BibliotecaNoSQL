@@ -41,7 +41,12 @@ if(idLivro !== ""){
             },
             body: JSON.stringify(dado)
         });
-        alert("Livro cadastrado com sucesso!");
+       if (response.ok) {
+            alert("Livro cadastrado com sucesso!");
+        } else {
+            const errorMessage = await response.text();
+            alert(`Erro ao cadastrar livro: ${errorMessage}`);
+        }
       
     } catch (error) {
         console.error('Erro ao cadastrar:', error);
