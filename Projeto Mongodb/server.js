@@ -84,7 +84,7 @@ async function serverDelete(){
     }
 
 async function serverCadastrar(server){
-    let selectAutores = {nome: 1, idade: 1, nacionalidade: 1};
+    let selectAutores = {_id:1 ,nome: 1, idade: 1, nacionalidade: 1};
     serverPost(server, 'cadastrar', 'cadastrarLivros', 'Livros', DatabaseBiblioteca);
     serverPost(server, 'cadastrar', 'cadastrarAutores', 'Autores', DatabaseBiblioteca);
     serverGet(server, 'common', 'selectAutores', 'Autores', selectAutores, DatabaseBiblioteca);
