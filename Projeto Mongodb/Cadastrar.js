@@ -9,7 +9,6 @@ async function cadastrarLivros() {
     if (selectAutor1) autores_disponiveis.push(selectAutor1);
     if (selectAutor2) autores_disponiveis.push(selectAutor2);
     if (selectAutor3) autores_disponiveis.push(selectAutor3);
-
     if(autores_disponiveis.length == 0){
         alert("É necessário ao menos um autor!");
         return;
@@ -23,6 +22,7 @@ async function cadastrarLivros() {
     dado = {
         titulo: titulo_livro,
         autores: autores_disponiveis,
+        autores_nome: autores_disponiveis.nome
     };
 
 if(idLivro !== ""){
@@ -30,6 +30,7 @@ if(idLivro !== ""){
         _id: idLivro,
         titulo: titulo_livro,
         autores: autores_disponiveis,
+        autores_nome: autores_disponiveis.nome
     };
 }
 
@@ -111,10 +112,13 @@ async function carregarAutores() {
 
          
         if ( autores.length > 0) {
+           
             autores.forEach(autor => { 
+                alert('Autor:', autor);
+                console.log('Autor', autor);
                 if (autor.nome || autor.idade || autor.nacionalidade) {
                     const option = document.createElement('option');
-                    option.value = autor.nome;
+                    option.value = autor._id;
                     option.textContent = autor.nome + ' - ' + autor.idade + ' - ' + autor.nacionalidade;  
                     selectAutor1.appendChild(option.cloneNode(true));
                     selectAutor2.appendChild(option.cloneNode(true));
@@ -142,13 +146,12 @@ function atualizarOpcoes(selectAtual, ...outrosSelects) {
         ...Array.from(outrosSelects).map(select => select.value)
     ];
 
-    // Remove opções de autores já selecionados
     outrosSelects.forEach(select => {
         Array.from(select.options).forEach(option => {
             if (selecionados.includes(option.value)) {
-                option.style.display = 'none';  // Torna a opção invisível
+                option.style.display = 'none'; 
             } else {
-                option.style.display = '';  // Exibe a opção novamente
+                option.style.display = ''; 
             }
         });
     });

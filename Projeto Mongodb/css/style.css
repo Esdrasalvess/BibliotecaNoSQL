@@ -4,7 +4,7 @@
 }
 
 header {
-    background-color: purple;
+    background: linear-gradient(#9198e5 10%, #102542 90%);
     height: 130px;
 }
 
@@ -39,14 +39,14 @@ body {
 
 main {
     height: 100vh;
-    background-color: red;
+    background-color: #B3A394;
     width: 1200px;
     margin: auto;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.225);
 }
 
 nav {
-    background-color: yellowgreen;
+    background-color: #102542;
     
     height: 20px;
 
@@ -63,7 +63,7 @@ nav a {
 }
 
 nav a:hover {
-    background-color: rgb(255, 0, 242);
+    background-color: #9198e5;
     transition-duration: 0.4s;
     padding: 3px;
     border-radius: 3px;
