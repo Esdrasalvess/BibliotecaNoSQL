@@ -18,6 +18,15 @@ async function iniciarServidor(){
             server.get('/', (req, res) => {
                 res.sendFile(path.join(__dirname, 'index.html'));
             });
+            server.get('/', (req, res) => {
+                res.sendFile(path.join(__dirname, 'cadastro_autor.html'));
+            });
+            server.get('/cadastro_livro', (req, res) => {
+                res.sendFile(path.join(__dirname, 'cadastro_livro.html'));
+            });
+            server.get('/consulta', (req, res) => {
+                res.sendFile(path.join(__dirname, 'consulta.html'));
+            });
 
             server.listen(PORT, ()=>
                 {
