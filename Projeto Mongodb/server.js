@@ -232,7 +232,7 @@ async function common(database) {
   
 
 
-
+//MUDEI AQUI 
 async function cadastrar(database, collection, dado) {
         try {
             const { Livros, Autores } = await common(database);
