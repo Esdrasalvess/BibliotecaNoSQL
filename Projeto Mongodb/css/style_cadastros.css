@@ -42,9 +42,20 @@ input {
     margin: auto;
 }
 
-select {
+.input2{
     height: 50px;
     width: 250px;
+
+    font-size: 20px;
+    padding: 5px;
+
+    display: block;
+    margin: auto;
+}
+
+select {
+    height: 50px;
+    width: 260px;
 
     font-size: 20px;
     padding: 5px;
