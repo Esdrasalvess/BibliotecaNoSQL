@@ -16,7 +16,6 @@ async function carregarTabelaAutores() {
 
         if (autores && autores.length > 0) {
             autores.forEach(autor => {
-                alert(autores);
                 const linha = tabelaAutores.insertRow();
 
                 // Adiciona as células para ID, nome, idade e nacionalidade
