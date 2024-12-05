@@ -24,10 +24,10 @@ async function iniciarServidor(){
             })
         }catch(error){
             console.error('Erro ao iniciar o servidor:' + error);
-    }}
+}}
 
 
-    async function serverPost(server, aba, função, collection, database) {
+async function serverPost(server, aba, função, collection, database) {
         server.post('/' + aba + '/' + função, async (req, res) => {
             const dado = req.body;
     
@@ -44,7 +44,7 @@ async function iniciarServidor(){
                 return res.status(status).json({ message });
             }
         });
-    }
+}
     
     
 
@@ -81,7 +81,7 @@ async function serverDelete(){
     }
 
 async function serverCadastrar(server){
-    let selectAutores = {_id:1 ,nome: 1, idade: 1, nacionalidade: 1};
+    let selectAutores = {nome: 1, idade: 1, nacionalidade: 1};
     serverPost(server, 'cadastrar', 'cadastrarLivros', 'Livros', DatabaseBiblioteca);
     serverPost(server, 'cadastrar', 'cadastrarAutores', 'Autores', DatabaseBiblioteca);
     serverGet(server, 'common', 'selectAutores', 'Autores', selectAutores, DatabaseBiblioteca);
