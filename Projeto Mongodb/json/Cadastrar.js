@@ -37,7 +37,7 @@ async function cadastrarAutores(event) {
         if (response.ok) {
             console.log("Autor cadastrado com sucesso!");
             mensagemSucesso.style.display = "inline";
-            mensagemSucesso.innerText = "Autor cadastrado com sucesso!";  // Exibe mensagem de sucesso
+            mensagemSucesso.innerText = "✔️Autor cadastrado com sucesso!";  // Exibe mensagem de sucesso
         } else {
             const mensagem = await response.text(); 
             alert(`Erro ao cadastrar autor: ${mensagem}`);

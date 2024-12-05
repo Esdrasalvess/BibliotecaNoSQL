@@ -63,11 +63,9 @@ async function serverPost(server,janela, aba, função, collection, database) {
 async function serverGet(server, aba, função, collection, dados_visíveis, database){
     server.get('/' + aba + '/' + função, async (req, res) => {
         try {
-            const filtros = req.query;  // Captura os parâmetros de filtro da URL (ex: ?nome=AutorX&idade=30)
-            
-            let query = {};  // Inicializa uma consulta vazia
+            const filtros = req.query;  
+            let query = {};  
 
-            // Adiciona filtros à consulta caso existam
             for (let campo in filtros) {
                 query[campo] = filtros[campo];
             }
@@ -79,7 +77,7 @@ async function serverGet(server, aba, função, collection, dados_visíveis, dat
                     break;
                 case 'Livros': 
                     const { Livros } = await common(database);
-                    const buscaLivro = await Livros.find({query}, dados_visíveis);
+                    const buscaLivro = await Livros.find(query, dados_visíveis);
                     res.json(buscaLivro);  
                     break;
                 default:
@@ -93,8 +91,18 @@ async function serverGet(server, aba, função, collection, dados_visíveis, dat
     
 }
 
-async function serverDelete(){
-
+async function serverDelete(server, aba, janela, função, collection, database ){
+ server.delete('/' + janela + '/' + aba + '/' + função, async (req, res) => {
+        const { id } = req.params;  
+            try {
+                await deletar(database, collection, {_id: id});
+                return res.status(200).json({ message: ` ${collection} deletado com sucesso!` });
+            } catch (error) {
+                const status = error.status || 500;
+                const message = error.message || 'Erro interno do servidor.';
+                return res.status(status).json({ message });
+            }
+        });
     }
 
 async function serverCadastrar(server){
@@ -106,18 +114,12 @@ async function serverCadastrar(server){
 }
 
 async function serverConsultar(server){
-    let selectLivros = {_id: 1, titulo: 1, autores: 1};
-    serverGet(server, 'common', 'consultLivros', 'Livros', selectLivros, DatabaseBiblioteca);
-    
+    let selectLivros = {_id: 1, titulo: 1, autores: 1, ano_publicação: 1};
+    //serverGet(server, 'common', 'selectAutores', 'Autores', selectAutores, DatabaseBiblioteca);
+    serverGet(server, 'common', 'selectLivros', 'Livros', selectLivros, DatabaseBiblioteca);
+    serverDelete(server, 'consultas.html', 'deletar', 'deletarAutores', 'Autores', DatabaseBiblioteca)
 }
 
-async function serverAtualizar(server){
-    serverGet(server, 'atualizar', 'atualizarLivros', );
-}
-
-async function serverDeletar(server){
-
-}
 
 
 
@@ -129,9 +131,7 @@ async function iniciarRotas(server){
 
         serverConsultar(server);
 
-        serverAtualizar(server);
 
-        serverDeletar(server);
 /*
         server.post('/atualizar/atualizarAutores', async(req, res) => {
             const dado = req.body;
@@ -296,12 +296,12 @@ async function deletar(database, collection, criterio){
             switch(collection) {
                 case 'Livros':
                     resultado = await Livros.deleteOne(criterio);
-                    console.log('Livro adicionado:', resultado);
+                    console.log('Livro deletado:', resultado);
                     break;
 
                 case 'Autores':
                     resultado = await Autores.deleteOne(criterio);
-                    console.log('Autor adicionado:', resultado);
+                    console.log('Autor deletado:', resultado);
                     break;
 
                 default:
