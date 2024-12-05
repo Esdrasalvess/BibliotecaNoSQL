@@ -188,11 +188,11 @@ function atualizarOpcoes(...selects) {
 }
 
 document.getElementById('cadastrar/cadastrarLivro').addEventListener('click', function(event) {
-    cadastrarLivros(event);  // Passa o evento para a função
+    cadastrarLivros(event);  
 });
 
 document.getElementById('cadastrar/cadastrarAutor').addEventListener('click', function(event) {
-    cadastrarAutores(event);  // Passa o evento para a função
+        cadastrarAutores(event); 
 });
 
 document.addEventListener('DOMContentLoaded', carregarAutores);

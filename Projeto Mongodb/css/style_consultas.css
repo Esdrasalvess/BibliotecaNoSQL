@@ -94,17 +94,16 @@ th {
     table-layout: fixed;        /* Ajusta a largura das colunas */
 }
 
-#tabelaAutores th, #tabelaAutores td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
 
 /* Container que envolve o corpo da tabela para rolagem */
 #tabelaAutoresWrapper {
     max-height: 300px;        /* Limite de altura da tabela */
     overflow-y: auto;         /* Adiciona a rolagem vertical */
     width: 100%;
+}
+
+#tabelaAutores tbody tr {
+   border-bottom: 1px solid black; /* Linha cinza clara entre as linhas */
 }
 
 /* Cabeçalho da tabela */
@@ -114,5 +113,35 @@ th {
 
 /* Tabela de dados */
 #tabelaAutores td {
+    text-align: center;
+}
+
+
+
+#tabelaLivros {
+    width: 100%;
+    border-collapse: collapse;  /* Juntar as bordas */
+    table-layout: fixed;        /* Ajusta a largura das colunas */
+}
+
+
+/* Container que envolve o corpo da tabela para rolagem */
+#tabelaLivrosWrapper {
+    max-height: 300px;        /* Limite de altura da tabela */
+    overflow-y: auto;         /* Adiciona a rolagem vertical */
+    width: 100%;
+}
+
+#tabelaLivros tbody tr {
+   border-bottom: 1px solid black; /* Linha cinza clara entre as linhas */
+}
+
+/* Cabeçalho da tabela */
+#tabelaLivros th {
+    background-color: #f2f2f2;
+}
+
+/* Tabela de dados */
+#tabelaLivros td {
     text-align: center;
 }

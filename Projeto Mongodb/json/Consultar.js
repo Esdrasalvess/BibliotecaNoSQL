@@ -33,13 +33,13 @@ async function carregarTabelaAutores() {
                 const editarBtn = document.createElement('button');
                 editarBtn.textContent = 'Editar';
                 editarBtn.classList.add('editarBtn');
-                editarBtn.onclick = () => editarAutor(autor._id); 
+                editarBtn.onclick = () => editar(autor._id); 
                 cellAcoes.appendChild(editarBtn);
 
                 const deletarBtn = document.createElement('button');
                 deletarBtn.textContent = 'Deletar';
                 deletarBtn.classList.add('deletarBtn');
-                deletarBtn.onclick = () => deletarAutor(autor._id);  // Passa o ID para o método de deletar
+                deletarBtn.onclick = () => deletar(autor._id, 'Autores');  // Passa o ID para o método de deletar
                 cellAcoes.appendChild(deletarBtn);
             });
         } else {
@@ -62,9 +62,9 @@ async function carregarTabelaLivros() {
         }
 
         const livros = await response.json();  
-        console.log("Livros carregados:", autores);  
+        console.log("Livros carregados:", livros);  
 
-        tabelaAutores.innerHTML = '';
+        tabelaLivros.innerHTML = '';
 
         if (livros && livros.length > 0) {
             livros.forEach(livro => {
@@ -77,20 +77,21 @@ async function carregarTabelaLivros() {
                 const cellAnoDePublicação = linha.insertCell(3);
                 const cellAcoes = linha.insertCell(4); 
 
-                cellId.textContent = livro.titulo || 'N/D'; 
+                cellId.textContent = livro._id || 'N/D'; 
+                cellTitulo.textContent = livro.titulo || 'N/D';
                 cellAutores.textContent = livro.autores || 'N/D';  
                 cellAnoDePublicação.textContent = livro.ano_publicação || 'N/D'; 
                
                 const editarBtn = document.createElement('button');
                 editarBtn.textContent = 'Editar';
                 editarBtn.classList.add('editarBtn');
-                editarBtn.onclick = () => editarAutor(autor._id); 
+                editarBtn.onclick = () => editar(livro._id); 
                 cellAcoes.appendChild(editarBtn);
 
                 const deletarBtn = document.createElement('button');
                 deletarBtn.textContent = 'Deletar';
                 deletarBtn.classList.add('deletarBtn');
-                deletarBtn.onclick = () => deletarAutor(autor._id);  // Passa o ID para o método de deletar
+                deletarBtn.onclick = () => deletar(livro._id, 'Livros');  
                 cellAcoes.appendChild(deletarBtn);
             });
         } else {
@@ -98,6 +99,33 @@ async function carregarTabelaLivros() {
         }
     } catch (error) {
         console.error('Erro ao carregar autores:', error);  
+    }
+}
+
+async function deletar(id, tipo) { 
+    event.preventDefault();
+    try {
+        const response = await fetch(`/consultas.html/deletar/deletar${tipo}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id }) 
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro ao deletar ${tipo}: ${response.status}`);
+        }
+
+        const resultado = await response.json();
+        console.log(resultado.message); 
+
+       
+        if (tipo === 'Autores') {
+            carregarTabelaAutores();
+        } else if (tipo === 'Livros') {
+            carregarTabelaLivros();
+        }
+    } catch (error) {
+        console.error(`Erro ao deletar ${tipo}:`, error);
     }
 }
 

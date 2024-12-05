@@ -118,6 +118,7 @@ async function serverConsultar(server){
     //serverGet(server, 'common', 'selectAutores', 'Autores', selectAutores, DatabaseBiblioteca);
     serverGet(server, 'common', 'selectLivros', 'Livros', selectLivros, DatabaseBiblioteca);
     serverDelete(server, 'consultas.html', 'deletar', 'deletarAutores', 'Autores', DatabaseBiblioteca)
+    serverDelete(server, 'consultas.html', 'deletar', 'deletarLivros', 'Livros', DatabaseBiblioteca)
 }
 
 
@@ -130,57 +131,6 @@ async function iniciarRotas(server){
         serverCadastrar(server);
 
         serverConsultar(server);
-
-
-/*
-        server.post('/atualizar/atualizarAutores', async(req, res) => {
-            const dado = req.body;
-            try{
-                await atualizar('Biblioteca', 'Autores', dado);
-                    res.status(200).send('Autor cadastrado com sucesso!');
-                } catch (error) {
-                    res.status(500).send('Erro ao cadastrar o autor');
-                }
-        })
-
-        server.post('/atualizar/atualizarLivros', async(req, res) => {
-            const dado = req.body;
-            try{
-                await atualizar('Biblioteca', 'Livros', dado);
-                    res.status(200).send('Autor cadastrado com sucesso!');
-                } catch (error) {
-                    res.status(500).send('Erro ao cadastrar o autor');
-                }
-        })
-
-        serverGet(server, 'atualizar', 'selectAutores', 'Autores', 'nome');
-        serverGet(server, 'cadastrar', 'selectLivros', 'Livros', 'titulo');
-
-        server.get('/atualizar/selectAutores', async (req, res) => {
-            try {
-               const { Autores } = await common('Biblioteca');
-               const autores = await Autores.find({}, 'nome');  
-           res.json(autores);  
-           } catch (error) {
-               console.error('Erro ao obter autores:', error);
-               res.status(500).send('Erro ao obter autores');
-           }
-        });
-
-        server.get('/atualizar/selectAutores', async (req, res) => {
-            try {
-               const { Livros } = await common('Biblioteca');
-               const livros = await Livros.find({}, 'nome');  
-           res.json(livros);  
-           } catch (error) {
-               console.error('Erro ao obter livros:', error);
-               res.status(500).send('Erro ao obter livros');
-           }
-        });
-*/
-        
-
-      
 
         console.log('Páginas funcionando com sucesso!')
 
