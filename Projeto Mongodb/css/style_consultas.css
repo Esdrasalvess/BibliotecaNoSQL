@@ -18,7 +18,6 @@
 }
 
 form {
-    background-color: blueviolet;
     height: 50px;
     width: 900px;
     margin: auto;
@@ -36,7 +35,6 @@ input {
 
 .colunas{
     margin: auto;
-    background-color: red;
     height: 50px;
     width: 700px;
 
@@ -68,4 +66,23 @@ button:hover  {
     border-top-left-radius: 5px;
 
     text-indent: 16px;
+}
+
+
+table{
+    width: 800px;
+    border-collapse: collapse;
+    font-size: 18px;
+    margin: auto;
+    margin-top: 10px;
+    background-color: white;
+}
+
+thead  {
+    margin-left: 10px;
+}
+
+th {
+    text-align: center;
+    border: 2px solid black;
 }

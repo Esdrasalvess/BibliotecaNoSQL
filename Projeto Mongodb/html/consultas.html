@@ -25,16 +25,26 @@
 
     <main>
        <div class="consultas">
-        <h2>Consulta Autor</h2>
-        <form id="formConsultarAutor">
-            <div class="colunas">
-                <input type="text" id="consultar/nome_autor" placeholder="Nome do Autor">
-                <input type="text" id="consultar/idade_autor" placeholder="Idade">
-                <input type="text" id="consultar/nacionalidade_autor" placeholder="Nacionalidade">
-                <button id="consultar/consultarAutor">Consultar</button>
-
+            <h2>Consulta Autor</h2>
+            <form id="formConsultarAutor">
+                <div class="colunas">
+                    <input type="text" id="consultar/nome_autor" placeholder="Nome do Autor">
+                    <input type="text" id="consultar/idade_autor" placeholder="Idade">
+                    <input type="text" id="consultar/nacionalidade_autor" placeholder="Nacionalidade">
+                    <button id="consultar/consultarAutor">Consultar</button>
+                </div>
                 <table id="tabela-autores">
                     <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Idade</th>
+                            <th>Nacionalidade</th>
+                        </tr>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Idade</th>
+                            <th>Nacionalidade</th>
+                        </tr>
                         <tr>
                             <th>Nome</th>
                             <th>Idade</th>
@@ -44,20 +54,20 @@
                     <tbody>
                     </tbody>
                 </table>
-            </div>
-        </form>
+            </form>
        </div>
 
        <div class="consultas">
-        <h2>Consulta Livros</h2>
-        <form id="formConsultarLivro">
-            <div class="colunas">
-                <input type="text" id="consultar/titulo_livro" placeholder="Título do Livro">
-                <input type="text" id="consultar/nome_autor" placeholder="Autor">
-                <button id="consultar/consultarLivro">Consultar</button>
-            </div>
-        </form>
-       </div>
+            <h2>Consulta Livros</h2>
+            <form id="formConsultarLivro">
+                <div class="colunas">
+                    <input type="text" id="consultar/titulo_livro" placeholder="Título do Livro">
+                    <input type="text" id="consultar/nome_autor" placeholder="Autor">
+                    <button id="consultar/consultarLivro">Consultar</button>
+                </div>
+            </form>
+            
+        </div>
     </main>
 
     <footer>
