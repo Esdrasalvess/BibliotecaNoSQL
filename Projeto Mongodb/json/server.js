@@ -9,23 +9,24 @@
 async function iniciarServidor(){
         const server = express();
         server.use(express.json());
-        server.use('/html', express.static(path.join(__dirname, 'html')));
-        server.use('/css', express.static(path.join(__dirname, 'css')));
-        server.use('/', express.static(path.join(__dirname)));
+        server.use('/html', express.static(path.join(__dirname, '../html')));
+        server.use('/css', express.static(path.join(__dirname, '../css')));
+        server.use('/', express.static(__dirname));
         
         iniciarRotas(server);
         conectarBancodeDados();
         try{
+         
             server.get('/index2.html', (req, res) => {
-                res.sendFile(path.join(__dirname, 'html', 'index2.html'));
+                res.sendFile(path.join(__dirname, '../html', 'index2.html')); 
             });
             
             server.get('/cadastros.html', (req, res) => {
-                res.sendFile(path.join(__dirname, 'html', 'cadastros.html'));
+                res.sendFile(path.join(__dirname, '../html', 'cadastros.html'));
             });
             
             server.get('/consultas.html', (req, res) => {
-                res.sendFile(path.join(__dirname, 'html', 'consultas.html'));
+                res.sendFile(path.join(__dirname, '../html', 'consultas.html'));
             });
             
 
@@ -62,6 +63,7 @@ async function serverPost(server,janela, aba, função, collection, database) {
 async function serverGet(server, aba, função, collection, dados_visíveis, database){
     server.get('/' + aba + '/' + função, async (req, res) => {
         try {
+            
             switch(collection){
                 case 'Autores':
                     const { Autores } = await common(database);
@@ -100,7 +102,8 @@ async function serverCadastrar(server){
 }
 
 async function serverConsultar(server){
-  
+    let selectLivros = {_id: 1, titulo: 1, autores: 1};
+serverGet(server, 'common', 'selectLivros', 'Livros', selectLivros, DatabaseBiblioteca);
 
 }
 

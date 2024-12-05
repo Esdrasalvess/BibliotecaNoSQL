@@ -1,4 +1,5 @@
 async function cadastrarLivros() {
+    const mensagemSucesso = document.getElementById('mensagemSucesso');
     const titulo_livro = document.getElementById('cadastrar/titulo_livro').value;
     const selectAutor1 = document.getElementById('cadastrar/select_autores1').value;
     const selectAutor2 = document.getElementById('cadastrar/select_autores2').value;
@@ -34,6 +35,7 @@ if(idLivro !== ""){
 }
 
     try {
+       
         const response = await fetch('/cadastros.html/cadastrar/cadastrarLivros', {
             method: 'POST',
             headers: {
@@ -42,12 +44,16 @@ if(idLivro !== ""){
             body: JSON.stringify(dado)
         });
        if (response.ok) {
-            alert("Livro cadastrado com sucesso!");
+            console.log("Livro cadastrado com sucesso!");
+            mensagemSucesso.style.display = "inline";
+ 
         } else {
             const errorMessage = await response.text();
             alert(`Erro ao cadastrar livro: ${errorMessage}`);
         }
-      
+        setTimeout(() => {
+            mensagemSucesso.style.display = "none";
+        }, 3000);
     } catch (error) {
         console.error('Erro ao cadastrar:', error);
         alert('Erro: id já existente');
@@ -87,7 +93,7 @@ async function cadastrarAutores() {
         });
 
         if (response.ok) {
-            alert("Autor cadastrado com sucesso!");
+            console.log("Autor cadastrado com sucesso!");
         } else {
             const mensagem = await response.text(); 
             alert(`Erro ao cadastrar autor: ${mensagem}`);
@@ -159,10 +165,14 @@ function atualizarOpcoes(selectAtual, ...outrosSelects) {
     });
 }
 
-const botaocadastrarLivros = document.getElementById("cadastrar/cadastrarLivro");
-botaocadastrarLivros.addEventListener("click", cadastrarLivros);
+document.getElementById('cadastrar/cadastrarLivro').addEventListener('click', function(event) {
+    event.preventDefault();  
+    cadastrarLivros();  
+});
 
-const botaocadastrarAutores = document.getElementById("cadastrar/cadastrarAutor");
-botaocadastrarAutores.addEventListener("click", cadastrarAutores);
+document.getElementById('cadastrar/cadastrarAutor').addEventListener('click', function(event) {
+    event.preventDefault();  
+    cadastrarAutores();  
+});
 
 document.addEventListener('DOMContentLoaded', carregarAutores);
