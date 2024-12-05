@@ -118,8 +118,6 @@ async function carregarAutores() {
         if ( autores.length > 0) {
            
             autores.forEach(autor => { 
-                alert('Autor:', autor);
-                console.log('Autor', autor);
                 if (autor.nome || autor.idade || autor.nacionalidade) {
                     const option = document.createElement('option');
                     option.value = autor._id;
