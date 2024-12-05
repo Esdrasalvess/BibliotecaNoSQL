@@ -9,14 +9,25 @@
 async function iniciarServidor(){
         const server = express();
         server.use(express.json());
-        server.use(express.static(path.join(__dirname)));
+        server.use('/html', express.static(path.join(__dirname, 'html')));
+        server.use('/css', express.static(path.join(__dirname, 'css')));
+        server.use('/', express.static(path.join(__dirname)));
         
         iniciarRotas(server);
         conectarBancodeDados();
         try{
-            server.get('/', (req, res) => {
-                res.sendFile(path.join(__dirname, 'index.html'));
+            server.get('/index2.html', (req, res) => {
+                res.sendFile(path.join(__dirname, 'html', 'index2.html'));
             });
+            
+            server.get('/cadastros.html', (req, res) => {
+                res.sendFile(path.join(__dirname, 'html', 'cadastros.html'));
+            });
+            
+            server.get('/consultas.html', (req, res) => {
+                res.sendFile(path.join(__dirname, 'html', 'consultas.html'));
+            });
+            
 
             server.listen(PORT, ()=>
                 {
@@ -27,8 +38,8 @@ async function iniciarServidor(){
 }}
 
 
-async function serverPost(server, aba, função, collection, database) {
-        server.post('/' + aba + '/' + função, async (req, res) => {
+async function serverPost(server,janela, aba, função, collection, database) {
+        server.post('/' + janela + '/' + aba + '/' + função, async (req, res) => {
             const dado = req.body;
     
             try {
@@ -82,8 +93,8 @@ async function serverDelete(){
 
 async function serverCadastrar(server){
     let selectAutores = {nome: 1, idade: 1, nacionalidade: 1};
-    serverPost(server, 'cadastrar', 'cadastrarLivros', 'Livros', DatabaseBiblioteca);
-    serverPost(server, 'cadastrar', 'cadastrarAutores', 'Autores', DatabaseBiblioteca);
+    serverPost(server, 'cadastros.html', 'cadastrar', 'cadastrarLivros', 'Livros', DatabaseBiblioteca);
+    serverPost(server, 'cadastros.html', 'cadastrar', 'cadastrarAutores', 'Autores', DatabaseBiblioteca);
     serverGet(server, 'common', 'selectAutores', 'Autores', selectAutores, DatabaseBiblioteca);
 
 }
@@ -162,10 +173,7 @@ async function iniciarRotas(server){
 */
         
 
-        server.get('/', (requisição, resposta) => {
-            resposta.send('Página funcionando!');
-        }
-        )
+      
 
         console.log('Páginas funcionando com sucesso!')
 

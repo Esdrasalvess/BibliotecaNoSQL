@@ -34,7 +34,7 @@ if(idLivro !== ""){
 }
 
     try {
-        const response = await fetch('/cadastrar/cadastrarLivros', {
+        const response = await fetch('/cadastros.html/cadastrar/cadastrarLivros', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -55,10 +55,11 @@ if(idLivro !== ""){
 }
 
 async function cadastrarAutores() {
+    const idAutor = document.getElementById('cadastrar/id_autor').value;
     const nome_autor = document.getElementById('cadastrar/nome_autor').value;
     const idade_autor = document.getElementById('cadastrar/idade_autor').value;
     const nacionalidade_autor = document.getElementById('cadastrar/nacionalidade_autor').value;
-    const idAutor = document.getElementById('cadastrar/id_autor').value;
+   
     let dado;
 
     dado = {
@@ -77,7 +78,7 @@ async function cadastrarAutores() {
     }
 
     try {
-        const response = await fetch('/cadastrar/cadastrarAutores', {
+        const response = await fetch('/cadastros.html/cadastrar/cadastrarAutores', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'  
