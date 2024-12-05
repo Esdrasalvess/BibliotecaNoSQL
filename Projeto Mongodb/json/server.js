@@ -8,15 +8,21 @@
 
 async function iniciarServidor(){
         const server = express();
+
         server.use(express.json());
         server.use('/html', express.static(path.join(__dirname, '../html')));
         server.use('/css', express.static(path.join(__dirname, '../css')));
-        server.use('/', express.static(__dirname));
+        server.use('/imgs', express.static(path.join(__dirname, '../imgs')));
+        server.use('/', express.static((__dirname)));
         
-        iniciarRotas(server);
-        conectarBancodeDados();
+        await iniciarRotas(server);
+        await conectarBancodeDados();
         try{
          
+            server.get('/', (req, res) => {
+                res.sendFile(path.join(__dirname, '../html', 'index2.html')); 
+            });
+
             server.get('/index2.html', (req, res) => {
                 res.sendFile(path.join(__dirname, '../html', 'index2.html')); 
             });
@@ -44,13 +50,9 @@ async function serverPost(server,janela, aba, função, collection, database) {
             const dado = req.body;
     
             try {
-                // Tenta cadastrar o item no banco de dados
                 await cadastrar(database, collection, dado);
-    
-                // Responde com sucesso
                 return res.status(200).json({ message: `Cadastro de ${collection} foi um sucesso!` });
             } catch (error) {
-                // Retorna erro com status e mensagem apropriada
                 const status = error.status || 500;
                 const message = error.message || 'Erro interno do servidor.';
                 return res.status(status).json({ message });
@@ -58,21 +60,26 @@ async function serverPost(server,janela, aba, função, collection, database) {
         });
 }
     
-    
-
 async function serverGet(server, aba, função, collection, dados_visíveis, database){
     server.get('/' + aba + '/' + função, async (req, res) => {
         try {
+            const filtros = req.query;  // Captura os parâmetros de filtro da URL (ex: ?nome=AutorX&idade=30)
             
+            let query = {};  // Inicializa uma consulta vazia
+
+            // Adiciona filtros à consulta caso existam
+            for (let campo in filtros) {
+                query[campo] = filtros[campo];
+            }
             switch(collection){
                 case 'Autores':
                     const { Autores } = await common(database);
-                    const buscaAutor = await Autores.find({}, dados_visíveis); 
+                    const buscaAutor = await Autores.find(query, dados_visíveis); 
                     res.json(buscaAutor); 
                     break;
                 case 'Livros': 
                     const { Livros } = await common(database);
-                    const buscaLivro = await Livros.find({}, dados_visíveis);
+                    const buscaLivro = await Livros.find({query}, dados_visíveis);
                     res.json(buscaLivro);  
                     break;
                 default:
@@ -85,9 +92,6 @@ async function serverGet(server, aba, função, collection, dados_visíveis, dat
     });
     
 }
-
-
-
 
 async function serverDelete(){
 
@@ -103,8 +107,8 @@ async function serverCadastrar(server){
 
 async function serverConsultar(server){
     let selectLivros = {_id: 1, titulo: 1, autores: 1};
-serverGet(server, 'common', 'selectLivros', 'Livros', selectLivros, DatabaseBiblioteca);
-
+    serverGet(server, 'common', 'consultLivros', 'Livros', selectLivros, DatabaseBiblioteca);
+    
 }
 
 async function serverAtualizar(server){

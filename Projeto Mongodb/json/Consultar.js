@@ -9,26 +9,25 @@ async function carregarTabelaAutores() {
         }
 
         const autores = await response.json();  
-        console.log("Autores carregados:", autores);  // Log dos autores recebidos
+        console.log("Autores carregados:", autores);  
 
-        // Limpa a tabela antes de adicionar os novos dados
+
         tabelaAutores.innerHTML = '';
 
         if (autores && autores.length > 0) {
             autores.forEach(autor => {
                 const linha = tabelaAutores.insertRow();
 
-                // Adiciona as células para ID, nome, idade e nacionalidade
-                const cellId = linha.insertCell(0); // Célula para o ID
-                const cellNome = linha.insertCell(1); // Célula para o nome
-                const cellIdade = linha.insertCell(2); // Célula para a idade
-                const cellNacionalidade = linha.insertCell(3); // Célula para a nacionalidade
 
-                // Preenche as células com os dados
+                const cellId = linha.insertCell(0);
+                const cellNome = linha.insertCell(1);
+                const cellIdade = linha.insertCell(2);
+                const cellNacionalidade = linha.insertCell(3); 
+
                 cellId.textContent = autor._id ? autor._id.toString() : 'N/D'; 
-                cellNome.textContent = autor.nome || 'N/D';  // Nome do autor
-                cellIdade.textContent = autor.idade || 'N/D';  // Idade do autor
-                cellNacionalidade.textContent = autor.nacionalidade || 'N/D';  // Nacionalidade do autor
+                cellNome.textContent = autor.nome || 'N/D';  
+                cellIdade.textContent = autor.idade || 'N/D';  
+                cellNacionalidade.textContent = autor.nacionalidade || 'N/D'; 
             });
         } else {
             console.log('Nenhum autor encontrado');
@@ -39,42 +38,42 @@ async function carregarTabelaAutores() {
 }
 
 async function carregarTabelaLivros() {
-    const tabelaAutores = document.getElementById('tabelaLivros').getElementsByTagName('tbody')[0];
+    const tabelaLivros = document.getElementById('tabelaLivros').getElementsByTagName('tbody')[0];
 
     try {
-        const response = await fetch('/common/consultAutores');  
+        const response = await fetch('/common/consultLivros');  
 
         if (!response.ok) {
-            throw new Error('Falha ao carregar autores, status: ' + response.status);
+            throw new Error('Falha ao carregar livros, status: ' + response.status);
         }
 
-        const autores = await response.json();  
-        console.log("Autores carregados:", autores); 
+        const livros = await response.json();  
+        console.log("Livros carregados:", livros); 
 
     
         tabelaAutores.innerHTML = '';
 
-        if (autores && autores.length > 0) {
-            autores.forEach(autor => {
-                const linha = tabelaAutores.insertRow();
+        if (livros && livros.length > 0) {
+            livros.forEach(livro => {
+                const linha = tabelaLivros.insertRow();
 
-                // Adiciona as células para ID, nome, idade e nacionalidade
-                const cellId = linha.insertCell(0); // Célula para o ID
-                const cellNome = linha.insertCell(1); // Célula para o nome
-                const cellIdade = linha.insertCell(2); // Célula para a idade
-                const cellNacionalidade = linha.insertCell(3); // Célula para a nacionalidade
+      
+                const cellId = linha.insertCell(0); 
+                const cellTitulo = linha.insertCell(1); 
+                const cellAutores = linha.insertCell(2); 
 
-                // Preenche as células com os dados
-                cellId.textContent = autor._id ? autor._id.toString() : 'N/D'; 
-                cellNome.textContent = autor.nome || 'N/D';  // Nome do autor
-                cellIdade.textContent = autor.idade || 'N/D';  // Idade do autor
-                cellNacionalidade.textContent = autor.nacionalidade || 'N/D';  // Nacionalidade do autor
+               
+                cellId.textContent = livro._id || 'N/D'; 
+                cellTitulo.textContent = livro.titulo || 'N/D'; 
+                cellAutores.textContent = livro.autores || 'N/D';  
+
             });
         } else {
-            console.log('Nenhum autor encontrado');
+            console.log('Nenhum livro encontrado');
         }
     } catch (error) {
-        console.error('Erro ao carregar autores:', error);  
+        console.error('Erro ao carregar livros:', error);  
+        
     }
 }
 

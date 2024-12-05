@@ -86,3 +86,33 @@ th {
     text-align: center;
     border: 2px solid black;
 }
+
+/* Garantir que a tabela não ultrapasse o tamanho da área visível */
+#tabelaAutores {
+    width: 100%;
+    border-collapse: collapse;  /* Juntar as bordas */
+    table-layout: fixed;        /* Ajusta a largura das colunas */
+}
+
+#tabelaAutores th, #tabelaAutores td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Container que envolve o corpo da tabela para rolagem */
+#tabelaAutoresWrapper {
+    max-height: 300px;        /* Limite de altura da tabela */
+    overflow-y: auto;         /* Adiciona a rolagem vertical */
+    width: 100%;
+}
+
+/* Cabeçalho da tabela */
+#tabelaAutores th {
+    background-color: #f2f2f2;
+}
+
+/* Tabela de dados */
+#tabelaAutores td {
+    text-align: center;
+}
