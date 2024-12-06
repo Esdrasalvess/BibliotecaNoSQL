@@ -61,56 +61,69 @@ async function carregarTabelaAutores() {
 
 
 
-    async function carregarTabelaLivros() {
-        const tabelaLivros = document.getElementById('tabelaLivros').getElementsByTagName('tbody')[0];
+async function carregarTabelaLivros() {
+    const tabelaLivros = document.getElementById('tabelaLivros').getElementsByTagName('tbody')[0];
 
-        try {
-            const response = await fetch('/common/selectLivros');  
+    try {
+        const tituloLivro = document.getElementById('consultar/titulo_livro').value.trim();
+        const nomeAutor = document.getElementById('consultar/nome_autor').value.trim();
 
-            if (!response.ok) {
-                throw new Error('Falha ao carregar livros, status: ' + response.status);
-            }
+        const queryParams = new URLSearchParams();
+        if (tituloLivro) queryParams.append('titulo', tituloLivro);
+        if (nomeAutor) queryParams.append('autores', nomeAutor);
 
-            const livros = await response.json();  
-            console.log("Livros carregados:", livros);  
+        const response = await fetch(`/common/selectLivros?${queryParams.toString()}`);  
 
-            tabelaLivros.innerHTML = '';
-
-            if (livros && livros.length > 0) {
-                livros.forEach(livro => {
-                    const linha = tabelaLivros.insertRow();
-                    linha.dataset.id = livro._id; 
-
-                    const cellId = linha.insertCell(0);
-                    const cellTitulo = linha.insertCell(1);
-                    const cellAutores = linha.insertCell(2);
-                    const cellAnoDePublicação = linha.insertCell(3);
-                    const cellAcoes = linha.insertCell(4); 
-
-                    cellId.textContent = livro._id || 'N/D'; 
-                    cellTitulo.textContent = livro.titulo || 'N/D';
-                    cellAutores.textContent = livro.autores || 'N/D';  
-                    cellAnoDePublicação.textContent = livro.ano_publicação || 'N/D'; 
-                
-                    const editarBtn = document.createElement('button');
-                    editarBtn.textContent = 'Editar';
-                    editarBtn.classList.add('editarBtn');
-                    editarBtn.onclick = () => editar(livro._id); 
-                    cellAcoes.appendChild(editarBtn);
-
-                    const deletarBtn = document.createElement('button');
-                    deletarBtn.textContent = 'Deletar';
-                    deletarBtn.classList.add('deletarBtn');
-                    deletarBtn.onclick = () => deletar(livro._id, 'Livros');  
-                    cellAcoes.appendChild(deletarBtn);
-                });
-            } else {
-                console.log('Nenhum autor encontrado');
-            }
-        } catch (error) {
-            console.error('Erro ao carregar autores:', error);  
+        if (!response.ok) {
+            throw new Error('Falha ao carregar livros, status: ' + response.status);
         }
+
+        const livros = await response.json();  
+        console.log("Livros carregados:", livros);  
+
+        tabelaLivros.innerHTML = '';
+
+        if (livros && livros.length > 0) {
+            livros.forEach(livro => {
+                const linha = tabelaLivros.insertRow();
+                linha.dataset.id = livro._id; 
+
+                const cellId = linha.insertCell(0);
+                const cellTitulo = linha.insertCell(1);
+                const cellAutores = linha.insertCell(2);
+                const cellAnoDePublicacao = linha.insertCell(3);
+                const cellAcoes = linha.insertCell(4); 
+
+                cellId.textContent = livro._id || 'N/D'; 
+                cellTitulo.textContent = livro.titulo || 'N/D';
+                cellAutores.textContent = livro.autores || 'N/D';  
+                cellAnoDePublicacao.textContent = livro.ano_publicacao || 'N/D'; 
+            
+                const editarBtn = document.createElement('button');
+                editarBtn.textContent = 'Editar';
+                editarBtn.classList.add('editarBtn');
+                editarBtn.onclick = () => editar(livro._id); 
+                cellAcoes.appendChild(editarBtn);
+
+                const deletarBtn = document.createElement('button');
+                deletarBtn.textContent = 'Deletar';
+                deletarBtn.classList.add('deletarBtn');
+                deletarBtn.onclick = () => deletar(livro._id, 'Livros');  
+                cellAcoes.appendChild(deletarBtn);
+            });
+        } else {
+            console.log('Nenhum livro encontrado');
+        }
+    } catch (error) {
+        console.error('Erro ao carregar livros:', error);  
     }
+}
+
+document.getElementById('consultar/consultarLivro').addEventListener('click', function(event) {
+    event.preventDefault();  
+    carregarTabelaLivros(); 
+});
+
 
     async function deletar(id, tipo) { 
         event.preventDefault();

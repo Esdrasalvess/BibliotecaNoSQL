@@ -60,15 +60,15 @@ async function serverPost(server,janela, aba, função, collection, database) {
         });
 }
     
-async function serverGet(server, aba, função, collection, dados_visíveis, database) {
-    server.get('/' + aba + '/' + função, async (req, res) => {
+async function serverGet(server, aba, funcao, collection, dados_visíveis, database) {
+    server.get('/' + aba + '/' + funcao, async (req, res) => {
         try {
             const filtros = req.query;  
             let query = {};  
 
-            if (filtros.nome) query.nome = new RegExp(filtros.nome, 'i'); 
-            if (filtros.idade) query.idade = filtros.idade; 
-            if (filtros.nacionalidade) query.nacionalidade = new RegExp(filtros.nacionalidade, 'i');
+            for (let campo in filtros) {
+                query[campo] = new RegExp(filtros[campo], 'i'); // Filtro com regex (case-insensitive)
+            }
 
             switch (collection) {
                 case 'Autores':
@@ -76,16 +76,23 @@ async function serverGet(server, aba, função, collection, dados_visíveis, dat
                     const buscaAutor = await Autores.find(query, dados_visíveis); 
                     res.json(buscaAutor); 
                     break;
-                default:
-                    res.status(404).send('Coleção não encontrada');
+
+                case 'Livros': 
+                    const { Livros } = await common(database);
+                    const buscaLivro = await Livros.find(query, dados_visíveis);
+                    res.json(buscaLivro);  
                     break;
-            }
+
+                default:
+                    break;
+            } 
         } catch (error) {
             console.error('Erro ao obter ' + collection + ':', error);
             res.status(500).send('Erro ao obter ' + collection);
         }
     });
 }
+
 
 async function serverDelete(server, aba, janela, função, collection, database ){
  server.delete('/' + janela + '/' + aba + '/' + função, async (req, res) => {
