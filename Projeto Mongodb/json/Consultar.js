@@ -1,3 +1,5 @@
+// AKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+
 async function carregarTabelaAutores() {
     const tabelaAutores = document.getElementById('tabelaAutores').getElementsByTagName('tbody')[0];
 
