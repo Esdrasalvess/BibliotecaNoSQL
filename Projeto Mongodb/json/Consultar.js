@@ -129,6 +129,33 @@ async function deletar(id, tipo) {
     }
 }
 
+async function atualizar(id, tipo, novosDados) {
+    event.preventDefault(); 
+    try {
+        const response = await fetch(`/consultas.html/atualizar/atualizar${tipo}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, ...novosDados })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro ao atualizar ${tipo}: ${response.status}`);
+        }
+
+        const resultado = await response.json();
+        alert(`Atualização de ${tipo} realizada com sucesso!`);
+        console.log(resultado.message);
+
+        if (tipo === 'Autores') {
+            carregarTabelaAutores();
+        } else if (tipo === 'Livros') {
+            carregarTabelaLivros();
+        }
+    } catch (error) {
+        console.error(`Erro ao atualizar ${tipo}:`, error);
+    }
+}
+
 
 document.getElementById('consultar/consultarAutor').addEventListener('click', function(event) {
     event.preventDefault();  
