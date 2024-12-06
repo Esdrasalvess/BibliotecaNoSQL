@@ -210,11 +210,23 @@ async function cadastrar(database, collection, dado) {
     
             switch (collection) {
                 case 'Livros':
-                    resultado = dado._id
-                        ? await dadosLivros(LivrosId, dado)
-                        : await dadosLivros(Livros, dado);
-                    console.log('Livro adicionado:', resultado);
+                    if (dado.autores && Array.isArray(dado.autores)) {
+                        const autoresCompletos = await Promise.all(
+                            dado.autores.map(async (idAutor) => {
+                                const autor = await Autores.findById(idAutor); // Busca o autor pelo ID
+                                return autor ? autor.nome : null; // Retorna o nome ou null se não encontrado
+                            })
+                        );
+                
+                        dado.autores = autoresCompletos.filter(nome => nome !== null);
+                    }
+                
+                    const novoLivro = new Livros(dado);
+                    await novoLivro.save();
+                    console.log('Livro cadastrado com sucesso:', novoLivro);
                     break;
+                
+            
     
                 case 'Autores':
                     resultado = dado._id

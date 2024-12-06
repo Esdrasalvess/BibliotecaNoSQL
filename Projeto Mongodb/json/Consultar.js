@@ -97,7 +97,7 @@ async function carregarTabelaLivros() {
 
                 cellId.textContent = livro._id || 'N/D'; 
                 cellTitulo.textContent = livro.titulo || 'N/D';
-                cellAutores.textContent = livro.autores || 'N/D';  
+                cellAutores.textContent = livro.autores.join(', ') || 'N/D';  
                 cellAnoDePublicacao.textContent = livro.ano_publicacao || 'N/D'; 
             
                 const editarBtn = document.createElement('button');
