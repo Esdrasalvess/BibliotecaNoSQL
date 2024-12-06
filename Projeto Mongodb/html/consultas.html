@@ -38,6 +38,11 @@
                 <table id="tabelaAutores">
                     <thead>
                         <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Idade</th>
+                            <th>Nacionalidade</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,27 +53,31 @@
        </div>
 
        <div class="consultas">
-            <h2>Consulta Livros</h2>
-            <form id="formConsultarLivro">
-                <div class="colunas">
-                    <input type="text" id="consultar/titulo_livro" placeholder="Título do Livro">
-                    <input type="text" id="consultar/nome_autor" placeholder="Autor">
-                    <button id="consultar/consultarLivro">Consultar</button>
-                </div>
-                <div id="TabelaLivrosWrapper">
+        <h2>Consulta Livros</h2>
+        <form id="formConsultarLivro">
+            <div class="colunas">
+                <input type="text" id="consultar/titulo_livro" placeholder="Título do Livro">
+                <input type="text" id="consultar/nome_autor" placeholder="Nome do Autor">
+                <button id="consultar/consultarLivro">Consultar</button>
+            </div>
+            <div id="TabelaLivrosWrapper">
                 <table id="tabelaLivros">
                     <thead>
                         <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Autor(es)</th>
+                            <th>Ano de Publicação</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
-
             </div>
-            </form>
-            
-        </div>
+        </form>
+    </div>
+    
     </main>
 
     <footer>
