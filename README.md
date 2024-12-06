@@ -1,7 +1,5 @@
 # Sistema de Gerenciamento de Biblioteca
 
-## Faculdade Independente do Nordeste  
-**Bacharelado em Engenharia da Computação**  
 
 ### Integrantes:
 - Esdrás Alves dos Santos  
